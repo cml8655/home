@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">test</string>
+    
+    
+    <style name="TransparentStyleBottom">
+        <item name="android:windowIsTranslucent">true</item><!--半透明--> 
+        <item name="android:windowNoTitle">true</item><!--无标题--> 
+        <item name="android:windowBackground">@color/test</item><!--背景透明--> 
+    </style> 
+
+</resources>
