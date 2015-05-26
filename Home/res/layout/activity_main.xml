@@ -1,58 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 标题栏 -->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="50dp"
+        android:background="#123456"
+        android:gravity="center" >
 
-        <!-- 侧边导航 -->
-
-        <ListView
-            android:id="@+id/vertical_menu_list"
-            android:layout_width="150dp"
-            android:layout_height="0dp"
-            android:layout_gravity="right"
-            android:layout_marginBottom="10dp"
-            android:listSelector="@android:color/transparent"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:divider="@null" >
-        </ListView>
-
-        <!-- 底部工具栏 -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_gravity="bottom"
-            android:background="@android:color/holo_blue_bright"
-            android:orientation="horizontal"
-            android:padding="4dp" >
-
-            <TextView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:background="#123456"
-                android:text="电话" />
-
-            <TextView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:background="#123456"
-                android:text="相机" />
-
-            <TextView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:background="#123456"
-                android:text="短信" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分类XXX"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
-</FrameLayout>
+    <!-- 内容区域 -->
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </FrameLayout>
+
+    <!-- 底部工具栏 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        android:background="@android:color/holo_blue_bright"
+        android:orientation="horizontal"
+        android:padding="4dp" >
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#123456"
+            android:text="电话" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#123456"
+            android:text="相机" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#123456"
+            android:text="短信" />
+    </LinearLayout>
+
+</LinearLayout>
