@@ -3,44 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- 底部工具栏 -->
     <LinearLayout
-        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
+        android:layout_gravity="bottom"
+        android:background="@android:color/holo_blue_bright"
+        android:padding="4dp"
+        android:layout_height="65dp"
         android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#123456"
+            android:text="电话" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#123456"
+            android:text="相机" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#123456"
+            android:text="短信" />
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:background="#123456"
-            android:text="短信"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerInParent="true"
-            android:background="#123456"
-            android:text="相机"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentRight="true"
-            android:background="#123456"
-            android:text="电话"
-            android:textColor="@android:color/white" />
-    </RelativeLayout>
 
 </FrameLayout>
