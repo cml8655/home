@@ -61,10 +61,9 @@ public class CategoryIndicatorView extends ViewGroup {
 		int width = firstChild.getMeasuredWidth();
 
 		// 计算容器的高度，和最大能容数量
-		double maxCount = (double) getMeasuredHeight()
-				/ (height + ITEM_PADDING);
+		int maxCount = b / (height + ITEM_PADDING);
 
-		int len = Math.min((int) Math.ceil(maxCount), childCount);
+		int len = Math.min(maxCount, childCount);
 
 		int y = ITEM_PADDING;
 
@@ -75,16 +74,25 @@ public class CategoryIndicatorView extends ViewGroup {
 			child.layout(0, y, width, y + height);
 
 			y += ITEM_PADDING + height;
+
 		}
 
 		// 多出的部分切换到对面上
 		int startX = getMeasuredWidth() - width;
 
-		for (int i = len; i < childCount; i++) {
+		Toast.makeText(getContext(), "dd" + len + "," + childCount,
+				Toast.LENGTH_SHORT).show();
 
-			getChildAt(i).layout(startX, y, getMeasuredWidth(), y + height);
+		if (childCount > len) {
 
-			y -= (height + ITEM_PADDING);
+			y -= ITEM_PADDING + height;
+
+			for (int i = len; i < childCount; i++) {
+
+				getChildAt(i).layout(startX, y, getMeasuredWidth(), y + height);
+
+				y -= (height + ITEM_PADDING);
+			}
 		}
 
 	}

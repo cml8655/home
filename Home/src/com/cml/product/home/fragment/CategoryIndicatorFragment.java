@@ -27,7 +27,7 @@ public class CategoryIndicatorFragment extends BaseFragment {
 
 		List<Indicator> data = new ArrayList<CategoryIndicatorView.Indicator>();
 
-		for (int i = 0; i < 11; i++) {
+		for (int i = 0; i < 12; i++) {
 			Indicator indicator = new Indicator();
 			indicator.title = "title" + i;
 			data.add(indicator);
