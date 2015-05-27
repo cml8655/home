@@ -9,21 +9,22 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Path.Direction;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cml.product.home.R;
 
-public class CategoryIndicatorView extends ViewGroup implements OnTouchListener {
+public class CategoryIndicatorView extends ViewGroup implements
+		OnTouchListener, OnClickListener, OnLongClickListener {
 
 	private static final String TAG = CategoryIndicatorView.class
 			.getSimpleName();
@@ -51,6 +52,10 @@ public class CategoryIndicatorView extends ViewGroup implements OnTouchListener 
 
 	// 手势
 	private GestureDetector dector;
+
+	// 点击事件
+	private OnItemClickListener itemClickListener;
+	private OnItemLongClickListener itemLongClickListener;
 
 	public CategoryIndicatorView(Context context, List<Indicator> data,
 			IndicatorDirection direction) {
@@ -232,6 +237,10 @@ public class CategoryIndicatorView extends ViewGroup implements OnTouchListener 
 
 			txtView.setText(indicator.title);
 
+			item.setOnClickListener(this);
+			item.setOnLongClickListener(this);
+			item.setTag(indicator);
+
 			this.addView(item);
 		}
 
@@ -335,6 +344,43 @@ public class CategoryIndicatorView extends ViewGroup implements OnTouchListener 
 
 	}
 
+	@Override
+	public boolean onLongClick(View v) {
+
+		if (null != itemLongClickListener) {
+
+			Indicator data = (Indicator) v.getTag();
+
+			if (null != data) {
+				return itemLongClickListener.onLongClick(v, data.title,
+						data.type);
+			}
+
+		}
+		return false;
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (null != itemClickListener) {
+			Indicator data = (Indicator) v.getTag();
+
+			if (null != data) {
+				itemClickListener.onClick(v, data.title, data.type);
+			}
+		}
+	}
+
+
+	public void setItemClickListener(OnItemClickListener itemClickListener) {
+		this.itemClickListener = itemClickListener;
+	}
+
+	public void setItemLongClickListener(
+			OnItemLongClickListener itemLongClickListener) {
+		this.itemLongClickListener = itemLongClickListener;
+	}
+
 	public static enum IndicatorDirection {
 		LEFT, RIGHT
 	}
@@ -347,6 +393,21 @@ public class CategoryIndicatorView extends ViewGroup implements OnTouchListener 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		return dector.onTouchEvent(event);
+	}
+
+	public static interface OnItemClickListener {
+		public void onClick(View v, String title, Integer type);
+	}
+
+	public static interface OnItemLongClickListener {
+		/**
+		 * 
+		 * @param v
+		 * @param title
+		 * @param type
+		 * @return true 事件被处理了，不需要冒泡，false 未处理
+		 */
+		public boolean onLongClick(View v, String title, Integer type);
 	}
 
 }
