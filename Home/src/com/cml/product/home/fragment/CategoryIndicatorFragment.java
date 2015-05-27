@@ -34,7 +34,7 @@ public class CategoryIndicatorFragment extends BaseFragment {
 		}
 
 		CategoryIndicatorView view = new CategoryIndicatorView(getActivity(),
-				data, IndicatorDirection.LEFT);
+				data, IndicatorDirection.RIGHT);
 
 		Log.d(TAG, "fragment 初始化完成！");
 

@@ -10,7 +10,6 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_main);
 
 		getFragmentManager().beginTransaction()
@@ -18,4 +17,5 @@ public class HomeActivity extends BaseActivity {
 				.commit();
 
 	}
+	
 }
