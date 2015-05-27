@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cml.product.home.R;
 import com.cml.product.home.ui.CategoryIndicatorView;
 import com.cml.product.home.ui.CategoryIndicatorView.Indicator;
 import com.cml.product.home.ui.CategoryIndicatorView.IndicatorDirection;
@@ -48,6 +49,12 @@ public class CategoryIndicatorFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		return inflater.inflate(R.layout.fragment_indicators, container, false);
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+
 		List<Indicator> data = new ArrayList<CategoryIndicatorView.Indicator>();
 
 		for (int i = 0; i < 12; i++) {
@@ -56,19 +63,15 @@ public class CategoryIndicatorFragment extends BaseFragment {
 			data.add(indicator);
 		}
 
-		CategoryIndicatorView view = new CategoryIndicatorView(getActivity(),
-				data, IndicatorDirection.RIGHT);
+		CategoryIndicatorView indicator = (CategoryIndicatorView) view
+				.findViewById(R.id.category_indicator);
+		indicator.setDirection(IndicatorDirection.RIGHT);
+		indicator.setData(data);
 
-		view.setItemLongClickListener(itemLongClick);
-		view.setItemClickListener(itemClick);
+		indicator.setItemLongClickListener(itemLongClick);
+		indicator.setItemClickListener(itemClick);
 
 		Log.d(TAG, "fragment 初始化完成！");
-
-		return view;
-	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
 	}
 
 }

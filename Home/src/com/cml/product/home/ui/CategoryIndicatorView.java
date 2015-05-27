@@ -66,7 +66,12 @@ public class CategoryIndicatorView extends ViewGroup implements
 		initItems(context);
 		dector = new GestureDetector(context, new GestureDectorListener());
 		setOnTouchListener(this);
+	}
 
+	public CategoryIndicatorView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		dector = new GestureDetector(context, new GestureDectorListener());
+		setOnTouchListener(this);
 	}
 
 	private final class FlyableAnimatorListener implements AnimatorListener {
@@ -371,7 +376,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 		}
 	}
 
-
 	public void setItemClickListener(OnItemClickListener itemClickListener) {
 		this.itemClickListener = itemClickListener;
 	}
@@ -379,6 +383,23 @@ public class CategoryIndicatorView extends ViewGroup implements
 	public void setItemLongClickListener(
 			OnItemLongClickListener itemLongClickListener) {
 		this.itemLongClickListener = itemLongClickListener;
+	}
+
+	public List<Indicator> getData() {
+		return data;
+	}
+
+	public void setData(List<Indicator> data) {
+		this.data = data;
+		this.initItems(getContext());
+	}
+
+	public IndicatorDirection getDirection() {
+		return direction;
+	}
+
+	public void setDirection(IndicatorDirection direction) {
+		this.direction = direction;
 	}
 
 	public static enum IndicatorDirection {
