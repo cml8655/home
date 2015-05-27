@@ -1,7 +1,9 @@
 package com.cml.product.home.fragment;
 
 import com.cml.product.home.R;
+import com.cml.product.home.activity.HomeActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +15,16 @@ public class CategoryFragment extends BaseFragment {
 	public static final String ARGUMENT_TITLE = "CategoryFragment.ARGUMENT_TITLE";
 	public static final String ARGUMENT_TYPE = "CategoryFragment.ARGUMENT_TYPE";
 
+	private HomeActivity homeActivity;
+
 	private String title;
 	private Integer type;
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		homeActivity = (HomeActivity) activity;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,10 @@ public class CategoryFragment extends BaseFragment {
 
 		titleView.setText("title:" + title);
 		typeView.setText("type:" + type);
+
+		if (null != homeActivity) {
+			homeActivity.setCategoryTitle(title);
+		}
 	}
 
 }
