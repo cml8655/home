@@ -3,6 +3,7 @@ package com.cml.product.home.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class CategoryIndicatorFragment extends BaseFragment {
 		public void onClick(View v, String title, Integer type) {
 			Toast.makeText(getActivity(), "click：" + title + ":" + type,
 					Toast.LENGTH_SHORT).show();
+			replaceContainer(title, type);
 
 		}
 	};
@@ -44,6 +46,21 @@ public class CategoryIndicatorFragment extends BaseFragment {
 			return true;
 		}
 	};
+
+	private void replaceContainer(String title, Integer type) {
+
+		FragmentTransaction tr = getFragmentManager().beginTransaction();
+
+		CategoryFragment target = new CategoryFragment();
+
+		Bundle extra = new Bundle();
+		extra.putString(CategoryFragment.ARGUMENT_TITLE, title);
+		extra.putInt(CategoryFragment.ARGUMENT_TYPE, type);
+		target.setArguments(extra);
+
+		tr.replace(R.id.indicator_container, target).commit();
+
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,9 +77,11 @@ public class CategoryIndicatorFragment extends BaseFragment {
 		for (int i = 0; i < 12; i++) {
 			Indicator indicator = new Indicator();
 			indicator.title = "title" + i;
+			indicator.type = i;
 			data.add(indicator);
 		}
 
+		// TODO 添加菜单栏显示，这里需要进行异步操作
 		CategoryIndicatorView indicator = (CategoryIndicatorView) view
 				.findViewById(R.id.category_indicator);
 		indicator.setDirection(IndicatorDirection.RIGHT);

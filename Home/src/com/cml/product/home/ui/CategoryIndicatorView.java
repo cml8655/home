@@ -29,7 +29,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 	private static final String TAG = CategoryIndicatorView.class
 			.getSimpleName();
 	private static final int ITEM_PADDING = 30;
-	public static final int FLYING_DISTANCE = 100;
+	public static final int FLYING_DISTANCE = 50;
 
 	private List<Indicator> data;
 	private IndicatorDirection direction;
@@ -372,6 +372,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 			if (null != data) {
 				itemClickListener.onClick(v, data.title, data.type);
+				hideIndicators();
 			}
 		}
 	}
