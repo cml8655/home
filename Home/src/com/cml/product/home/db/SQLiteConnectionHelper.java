@@ -15,7 +15,7 @@ public class SQLiteConnectionHelper extends SQLiteOpenHelper {
 	private static final String TAG = SQLiteConnectionHelper.class
 			.getSimpleName();
 
-	private static final String DATABASE_NAME = "lawson2.db";
+	private static final String DATABASE_NAME = "home.db";
 
 	/**
 	 * 在App版本升级情况下，如果DB的schema发生变更，需要对db的表定义进行升级，需要修改此版本号，以触发 onUpgrade方法，进行db变更
