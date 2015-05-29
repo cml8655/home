@@ -8,7 +8,7 @@ public class PrefUtil {
 
 	private static final String KEY_LAUNCH = "PrefUtil.KEYLAUNCH";
 
-	public boolean isFirstLaunch(String version, Context context) {
+	public static boolean isFirstLaunch(Context context) {
 		return getPref(KEY_LAUNCH, context) == null;
 	}
 

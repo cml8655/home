@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 public interface ColumnDef {
 	interface Tables {
 		String CATEGORY = "t_category";
+		String APP = "t_app";
 	}
 
 	interface Category extends BaseColumns {
@@ -23,6 +24,6 @@ public interface ColumnDef {
 		String ORDER = "app_order";
 		/** 1 系统应用 ,0 普通应用 */
 		String APP_FLG = "app_flg";
-		String START_TIMES="start_times";
+		String START_TIMES = "start_times";
 	}
 }
