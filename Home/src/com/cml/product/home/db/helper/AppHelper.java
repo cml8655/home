@@ -1,5 +1,6 @@
 package com.cml.product.home.db.helper;
 
+import com.cml.product.home.db.contract.AppContract;
 import com.cml.product.home.db.def.ColumnDef;
 
 import android.content.ContentUris;
@@ -9,14 +10,14 @@ import android.net.Uri;
 
 public class AppHelper extends BaseHelper {
 
-	private static final Uri URI = null;
+	private static final Uri URI = AppContract.URI;
 
 	public AppHelper(Context context) {
 		super(context);
 	}
 
 	/**
-	 * ²åÈëapp¼ÇÂ¼
+	 * ï¿½ï¿½ï¿½ï¿½appï¿½ï¿½Â¼
 	 * 
 	 * @param name
 	 * @param packageName
@@ -24,10 +25,11 @@ public class AppHelper extends BaseHelper {
 	 * @param appFlg
 	 * @return
 	 */
-	public long insertApp(String name, String packageName, Integer categoryId,
+	public long insertApp(String name, String packageName,Integer iconRes,  Integer categoryId,
 			Integer appFlg) {
 
 		ContentValues value = new ContentValues();
+		value.put(ColumnDef.App.ICON, iconRes);
 		value.put(ColumnDef.App.NAME, name);
 		value.put(ColumnDef.App.PACKAGE, packageName);
 		value.put(ColumnDef.App.CATEGORY, categoryId);

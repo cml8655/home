@@ -23,6 +23,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".db.provider.AppsProvider"
+            android:authorities="com.cml.product.home.db.contract.prefix.apps"
+            android:exported="false" >
+        </provider>
+        <provider
+            android:name=".db.provider.CategoryProvider"
+            android:authorities="com.cml.product.home.db.contract.prefix.categories"
+            android:exported="false" >
+        </provider>
+
+        <service android:name=".service.AppInitIntentService" >
+        </service>
     </application>
 
 </manifest>

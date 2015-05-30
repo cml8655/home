@@ -10,9 +10,7 @@ public interface ColumnDef {
 
 	interface Category extends BaseColumns {
 		String NAME = "category_name";
-		String TYPE = "category_type";
 		String ORDER = "category_order";
-		/** 分组图片，没有的话就是用默认 */
 		String ICON = "category_icon";
 	}
 
@@ -22,7 +20,6 @@ public interface ColumnDef {
 		String CATEGORY = "category_id";
 		String ICON = "app_icon";
 		String ORDER = "app_order";
-		/** 1 系统应用 ,0 普通应用 */
 		String APP_FLG = "app_flg";
 		String START_TIMES = "start_times";
 	}

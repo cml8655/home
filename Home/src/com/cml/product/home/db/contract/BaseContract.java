@@ -7,4 +7,5 @@ public interface BaseContract {
 
 	public static final String AUTHORITY_PREFIX = "com.cml.product.home.db.contract.prefix";
 
+	public static String[] QUERY_ALL = { "*" };
 }

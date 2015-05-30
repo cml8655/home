@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 
 public class PrefUtil {
 
-	private static final String KEY_LAUNCH = "PrefUtil.KEYLAUNCH";
+	public static final String KEY_LAUNCH = "PrefUtil.KEYLAUNCH";
 
 	public static boolean isFirstLaunch(Context context) {
 		return getPref(KEY_LAUNCH, context) == null;
@@ -18,4 +18,9 @@ public class PrefUtil {
 		return pref.getString(key, null);
 	}
 
+	public static void setPref(Context context, String key, String value) {
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		pref.edit().putString(key, value).apply();
+	}
 }

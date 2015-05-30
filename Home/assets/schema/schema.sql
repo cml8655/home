@@ -1,21 +1,20 @@
 CREATE TABLE t_category(
-	 _ID INTEGER 	PRIMARY KEY AUTOINCREMENT,
-	 CATEGORY_NAME	TEXT 	NOT NULL,
-	 CATEGORY_TYPE	INTEGER AUTOINCREMENT,
-	 CATEGORY_ORDER	INTEGER DEFAULT 0,
-	 CATEGORY_ICON	TEXT
+	 _id integer 		primary key autoincrement,
+	 category_name		TEXT		not null,
+	 category_order		INTEGER 	default 0,
+	 category_icon		INTEGER
 );
 CREATE TABLE t_app(
-	 _ID INTEGER PRIMARY KEY AUTOINCREMENT,
-	 APP_NAME		TEXT 	NOT NULL,
-	 APP_PACKAGE	TEXT 	NOT NULL,
-	 CATEGORY_ID	INTEGER NOT NULL,
-	 APP_ICON		INTEGER,
-	 APP_ORDER		INTEGER DEFAULT 0,
-	 APP_FLG		INTEGER DEFAULT 0,
-	 START_TIMES	INTEGER DEFAULT 0,
+	 _id integer primary key autoincrement,
+	 app_name		text 	not null,
+	 app_package	text 	not null,
+	 category_id	integer not null,
+	 app_icon		integer,
+	 app_order		integer default 0,
+	 app_flg		integer default 0,
+	 start_times	integer default 0
 );
 
-INSERT INTO t_category (_ID,CATEGORY_NAME,CATEGORY_TYPE,CATEGORY_ORDER,CATEGORY_ICON) VALUES(1,"系统软件",1,1,NULL);
-INSERT INTO t_category (_ID,CATEGORY_NAME,CATEGORY_TYPE,CATEGORY_ORDER,CATEGORY_ICON) VALUES(2,"游戏",2,2,NULL);
-INSERT INTO t_category (_ID,CATEGORY_NAME,CATEGORY_TYPE,CATEGORY_ORDER,CATEGORY_ICON) VALUES(3,"未分类",3,3,NULL);
+INSERT INTO t_category (_id,category_name,category_order,category_icon) VALUES(1,"绯荤粺杞欢",1,0);
+INSERT INTO t_category (_id,category_name,category_order,category_icon) VALUES(2,"娓告垙",2,0);
+INSERT INTO t_category (_id,category_name,category_order,category_icon) VALUES(3,"鍏朵粬APP",3,0);

@@ -28,6 +28,19 @@ public class SQLiteConnectionHelper extends SQLiteOpenHelper {
 
 	private AssetManager assets = null;
 
+	private static SQLiteConnectionHelper helper;
+
+	public static final SQLiteConnectionHelper getInstance(Context context) {
+
+		synchronized (SQLiteConnectionHelper.class) {
+			if (null == helper) {
+				helper = new SQLiteConnectionHelper(
+						context.getApplicationContext());
+			}
+		}
+		return helper;
+	}
+
 	public SQLiteConnectionHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		assets = context.getAssets();
@@ -35,6 +48,7 @@ public class SQLiteConnectionHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		Log.d(TAG, "onCrateTable");
 		executeSchema(db, DATABASE_CREATE_SQL);
 	}
 

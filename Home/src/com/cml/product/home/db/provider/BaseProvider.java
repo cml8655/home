@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-import com.cml.product.home.HomeApplication;
 import com.cml.product.home.db.SQLiteConnectionHelper;
 import com.cml.product.home.db.contract.BaseContract;
 
@@ -18,7 +17,7 @@ public abstract class BaseProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
-		helper = HomeApplication.dbHelper;
+		helper = SQLiteConnectionHelper.getInstance(getContext());
 		return true;
 	}
 

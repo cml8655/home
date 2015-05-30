@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.FragmentTransaction;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,25 +16,32 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cml.product.home.R;
+import com.cml.product.home.db.contract.CategoryContract;
+import com.cml.product.home.db.def.ColumnDef;
 import com.cml.product.home.ui.CategoryIndicatorView;
 import com.cml.product.home.ui.CategoryIndicatorView.Indicator;
 import com.cml.product.home.ui.CategoryIndicatorView.IndicatorDirection;
 import com.cml.product.home.ui.CategoryIndicatorView.OnItemClickListener;
 import com.cml.product.home.ui.CategoryIndicatorView.OnItemLongClickListener;
+import com.cml.product.home.util.ToastUtil;
 
 /**
- * 分组标签fragment
+ * 鑿滃崟
  * 
  * @author teamlab
  *
  */
 public class CategoryIndicatorFragment extends BaseFragment {
 
+	private static final Integer LOADER_CATEGORY = 1001;
+
+	private CategoryIndicatorView indicatorView;
+
 	private OnItemClickListener itemClick = new OnItemClickListener() {
 
 		@Override
 		public void onClick(View v, String title, Integer type) {
-			Toast.makeText(getActivity(), "click：" + title + ":" + type,
+			Toast.makeText(getActivity(), "click锟斤拷" + title + ":" + type,
 					Toast.LENGTH_SHORT).show();
 			replaceContainer(title, type);
 
@@ -41,7 +52,7 @@ public class CategoryIndicatorFragment extends BaseFragment {
 
 		@Override
 		public boolean onLongClick(View v, String title, Integer type) {
-			Toast.makeText(getActivity(), "onLongClick：" + title + ":" + type,
+			Toast.makeText(getActivity(), "onLongClick锟斤拷" + title + ":" + type,
 					Toast.LENGTH_SHORT).show();
 			return true;
 		}
@@ -72,25 +83,63 @@ public class CategoryIndicatorFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
-		List<Indicator> data = new ArrayList<CategoryIndicatorView.Indicator>();
+		indicatorView = (CategoryIndicatorView) view
+				.findViewById(R.id.category_indicator);
+		indicatorView.setItemLongClickListener(itemLongClick);
+		indicatorView.setItemClickListener(itemClick);
+		indicatorView.setDirection(IndicatorDirection.RIGHT);
 
-		for (int i = 0; i < 12; i++) {
-			Indicator indicator = new Indicator();
-			indicator.title = "title" + i;
-			indicator.type = i;
-			data.add(indicator);
+		getLoaderManager().initLoader(LOADER_CATEGORY, null,
+				new CategoryLoaderCallback());
+
+	}
+
+	private class CategoryLoaderCallback implements LoaderCallbacks<Cursor> {
+
+		@Override
+		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+			if (id == LOADER_CATEGORY) {
+				return new CursorLoader(getActivity(), CategoryContract.URI,
+						CategoryContract.QUERY_ALL, null, null, null);
+			}
+
+			return null;
 		}
 
-		// TODO 添加菜单栏显示，这里需要进行异步操作
-		CategoryIndicatorView indicator = (CategoryIndicatorView) view
-				.findViewById(R.id.category_indicator);
-		indicator.setDirection(IndicatorDirection.RIGHT);
-		indicator.setData(data);
+		@Override
+		public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-		indicator.setItemLongClickListener(itemLongClick);
-		indicator.setItemClickListener(itemClick);
+			ToastUtil.show(getActivity(), "杩斿洖鏁版嵁鍟︼細" + data);
 
-		Log.d(TAG, "fragment 初始化完成！");
+			if (data == null || data.isClosed()) {
+				return;
+			}
+
+			List<Indicator> categories = new ArrayList<CategoryIndicatorView.Indicator>();
+
+			while (data.moveToNext()) {
+
+				String name = data.getString(data
+						.getColumnIndex(ColumnDef.Category.NAME));
+				Integer type = data.getInt(data
+						.getColumnIndex(ColumnDef.Category._ID));
+
+				Indicator indicator = new Indicator();
+				indicator.title = name;
+				indicator.type = type;
+				categories.add(indicator);
+
+			}
+
+			indicatorView.setData(categories);
+		}
+
+		@Override
+		public void onLoaderReset(Loader<Cursor> loader) {
+
+		}
+
 	}
 
 }

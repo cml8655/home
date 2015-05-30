@@ -37,23 +37,16 @@ public class CategoryIndicatorView extends ViewGroup implements
 	private List<View> leftViewGroup = new ArrayList<View>();
 	private List<View> rightViewGroup = new ArrayList<View>();
 
-	// ’˚∏ˆ≤Àµ•¿∏øÌ∂»
 	private int viewWith;
-	// ’˚∏ˆ≤Àµ•¿∏∏ﬂ∂»
 	private int viewHeight;
 
-	// ◊”‘™ÀÿµƒøÌ∂»
 	private int itemWitdh;
-	// ≤Àµ•¿∏¬∂‘⁄Õ‚√ÊµƒøÌ∂»
 	private int itemIndicatorWidth = 20;
 
-	//  «∑Òø…“‘ª¨∂Ø«–ªª≤Àµ•
 	private boolean flyable = false;
 
-	//  ÷ ∆
 	private GestureDetector dector;
 
-	// µ„ª˜ ¬º˛
 	private OnItemClickListener itemClickListener;
 	private OnItemLongClickListener itemLongClickListener;
 
@@ -62,7 +55,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 		super(context);
 		this.data = data;
 		this.direction = direction;
-		// ÃÌº”◊”‘™Àÿ
 		initItems(context);
 		dector = new GestureDetector(context, new GestureDectorListener());
 		setOnTouchListener(this);
@@ -134,11 +126,9 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 			if (flyable && Math.abs(distance) >= FLYING_DISTANCE) {
 
-				// ◊ÛÕ˘”“ª¨∂Ø
 				if (distance > 0) {
 					onFlyingAnimator(IndicatorDirection.RIGHT);
 				} else {
-					// ”“Õ˘◊ÛªÓ∂Ø
 					onFlyingAnimator(IndicatorDirection.LEFT);
 				}
 			}
@@ -152,7 +142,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 			List<Animator> animators = new ArrayList<Animator>();
 
-			// ◊Û±ﬂ≤Àµ•
 			for (View v : leftViewGroup) {
 
 				ObjectAnimator anim = (ObjectAnimator) AnimatorInflater
@@ -168,7 +157,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 				animators.add(anim);
 			}
 
-			// ”“±ﬂ≤Àµ•
 			for (View v : rightViewGroup) {
 
 				ObjectAnimator anim = (ObjectAnimator) AnimatorInflater
@@ -184,8 +172,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 				animators.add(anim);
 			}
 
-			// set.addListener(new FlyableAnimatorListener());
-
 			set.playSequentially(animators);
 			// set.playTogether(animators);
 			set.start();
@@ -194,7 +180,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 	}
 
 	/**
-	 * “˛≤ÿ≤Àµ•¿∏
+	 * ÈöêËóèËèúÂçïÊ†è
 	 */
 	public void hideIndicators() {
 
@@ -202,7 +188,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 		List<Animator> animators = new ArrayList<Animator>();
 
-		// “˛≤ÿ◊Û±ﬂ≤Àµ•
 		for (View v : leftViewGroup) {
 			ObjectAnimator anim = (ObjectAnimator) AnimatorInflater
 					.loadAnimator(getContext(), R.animator.indicator_animator);
@@ -211,7 +196,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 			animators.add(anim);
 		}
 
-		// “˛≤ÿ”“±ﬂ
 		for (View v : rightViewGroup) {
 
 			ObjectAnimator anim = (ObjectAnimator) AnimatorInflater
@@ -257,10 +241,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 		Log.i(TAG, "onlayout:" + changed + ",l:" + l + ",t:" + t + ",r:" + r
 				+ ",b:" + b);
 
-		if (changed) {
-			return;
-		}
-
 		viewWith = getMeasuredWidth();
 		viewHeight = getMeasuredHeight();
 
@@ -269,6 +249,9 @@ public class CategoryIndicatorView extends ViewGroup implements
 		if (childCount == 0) {
 			return;
 		}
+		
+		leftViewGroup.clear();
+		rightViewGroup.clear();
 
 		View firstChild = getChildAt(0);
 
@@ -277,7 +260,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 		itemWitdh = width;
 
-		// º∆À„»›∆˜µƒ∏ﬂ∂»£¨∫Õ◊Ó¥Ûƒ‹»› ˝¡ø
 		int maxCount = b / (height + ITEM_PADDING);
 
 		int len = Math.min(maxCount, childCount);
@@ -301,7 +283,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 		}
 
-		// ∂‡≥ˆµƒ≤ø∑÷«–ªªµΩ∂‘√Ê…œ
 		if (childCount > len) {
 
 			y -= ITEM_PADDING + height;
@@ -311,7 +292,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 				View child = getChildAt(i);
 
 				TextView tx = (TextView) child.findViewById(R.id.indicator_txt);
-				tx.setText("∫Û√Ê°∑°∑");
+				tx.setText("ÊµãËØï");
 				if (direction == IndicatorDirection.LEFT) {
 					child.layout(getMeasuredWidth() - width, y,
 							getMeasuredWidth(), y + height);
@@ -324,10 +305,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 				y -= (height + ITEM_PADDING);
 			}
 		}
-
-		Log.d(TAG,
-				"◊Û±ﬂ‘™Àÿ¡ø£∫" + leftViewGroup.size() + ",”“±ﬂ£∫"
-						+ rightViewGroup.size());
 
 		hideIndicators();
 	}
@@ -409,7 +386,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 	public static class Indicator {
 		public String title;
-		public Integer type;// ∑÷¿‡
+		public Integer type;
 	}
 
 	@Override
@@ -422,13 +399,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 	}
 
 	public static interface OnItemLongClickListener {
-		/**
-		 * 
-		 * @param v
-		 * @param title
-		 * @param type
-		 * @return true  ¬º˛±ª¥¶¿Ì¡À£¨≤ª–Ë“™√∞≈›£¨false Œ¥¥¶¿Ì
-		 */
 		public boolean onLongClick(View v, String title, Integer type);
 	}
 
