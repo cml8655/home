@@ -10,13 +10,12 @@
 
     <ImageView
         android:id="@+id/app_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
 
     <TextView
         android:id="@+id/app_name"
         android:singleLine="true"
-        android:background="@android:color/holo_green_dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
