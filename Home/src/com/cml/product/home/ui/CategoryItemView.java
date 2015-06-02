@@ -3,12 +3,15 @@ package com.cml.product.home.ui;
 import java.util.List;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,17 +26,33 @@ import com.cml.product.home.model.AppModel;
  * @author Administrator
  *
  */
-public class CategoryItemView {
+public class CategoryItemView implements OnClickListener, OnLongClickListener {
 
 	private static final String TAG = "CategoryItemView";
+
+	/**
+	 * app点击事件与长按事件
+	 * 
+	 * @author teamlab
+	 *
+	 */
+	public static interface OnItemTouchListener {
+
+		void onClick(View v, AppModel data);
+
+		boolean onLongClick(View v, AppModel data);
+	}
 
 	private Context context;
 	private List<AppModel> data;
 	private PackageManager pm;
+	private OnItemTouchListener listener;
 
-	public CategoryItemView(Context context, List<AppModel> data) {
+	public CategoryItemView(Context context, List<AppModel> data,
+			OnItemTouchListener listener) {
 		this.context = context;
 		this.data = data;
+		this.listener = listener;
 		pm = context.getPackageManager();
 	}
 
@@ -74,11 +93,33 @@ public class CategoryItemView {
 			TableRow.LayoutParams itemParams = new TableRow.LayoutParams(0,
 					TableRow.LayoutParams.MATCH_PARENT, 1);
 
+			appView.setTag(data.get(i));
+			appView.setOnClickListener(this);
+			appView.setOnLongClickListener(this);
+
 			row.addView(appView, itemParams);
 
 		}
 
 		return row;
+	}
+
+	@Override
+	public boolean onLongClick(View v) {
+
+		if (null == listener) {
+			return false;
+		}
+
+		return listener.onLongClick(v, (AppModel) v.getTag());
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (null != listener) {
+			listener.onClick(v, (AppModel) v.getTag());
+		}
+
 	}
 
 }

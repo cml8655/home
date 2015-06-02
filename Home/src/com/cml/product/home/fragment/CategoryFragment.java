@@ -19,6 +19,7 @@ import com.cml.product.home.R;
 import com.cml.product.home.activity.HomeActivity;
 import com.cml.product.home.db.contract.AppContract;
 import com.cml.product.home.db.def.ColumnDef;
+import com.cml.product.home.fragment.helper.AppItemTouchHelper;
 import com.cml.product.home.model.AppModel;
 import com.cml.product.home.ui.CategoryItemView;
 
@@ -113,7 +114,7 @@ public class CategoryFragment extends BaseFragment {
 			int len = appList.size();
 
 			CategoryItemView itemView = new CategoryItemView(getActivity(),
-					appList);
+					appList, new AppItemTouchHelper(getActivity()));
 
 			// 4个一组，添加到界面上显示
 			for (int i = 0; i < len; i += ROW_COUNT) {
