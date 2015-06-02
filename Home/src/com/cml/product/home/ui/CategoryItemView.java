@@ -9,6 +9,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -100,6 +101,7 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 			// TableLayout.LayoutParams
 			TableRow.LayoutParams itemParams = new TableRow.LayoutParams(
 					appWidth, tableRowHeight);
+			itemParams.gravity=Gravity.CENTER;
 
 			appView.setTag(data.get(i));
 			appView.setOnClickListener(this);
