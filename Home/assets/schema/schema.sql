@@ -6,6 +6,7 @@ CREATE TABLE t_category(
 );
 CREATE TABLE t_app(
 	 _id integer primary key autoincrement,
+	 activity_name	text	not null,
 	 app_name		text 	not null,
 	 app_package	text 	not null,
 	 category_id	integer not null,

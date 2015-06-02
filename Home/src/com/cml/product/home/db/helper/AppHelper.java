@@ -25,12 +25,13 @@ public class AppHelper extends BaseHelper {
 	 * @param appFlg
 	 * @return
 	 */
-	public long insertApp(String name, String packageName,Integer iconRes,  Integer categoryId,
-			Integer appFlg) {
+	public long insertApp(String name, String packageName, String activityName,
+			Integer iconRes, Integer categoryId, Integer appFlg) {
 
 		ContentValues value = new ContentValues();
 		value.put(ColumnDef.App.ICON, iconRes);
 		value.put(ColumnDef.App.NAME, name);
+		value.put(ColumnDef.App.ACTIVITY_NAME, activityName);
 		value.put(ColumnDef.App.PACKAGE, packageName);
 		value.put(ColumnDef.App.CATEGORY, categoryId);
 		value.put(ColumnDef.App.APP_FLG, appFlg);

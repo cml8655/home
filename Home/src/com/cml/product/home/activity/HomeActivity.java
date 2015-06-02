@@ -99,8 +99,8 @@ public class HomeActivity extends BaseActivity {
 				// launchIntent.setComponent(new ComponentName(pkgName,
 				// activityName));
 
-				long id = helper.insertApp(appLabel, pkgName, reInfo.icon,
-						categoryId, appFlg);
+				long id = helper.insertApp(appLabel, pkgName, activityName,
+						reInfo.icon, categoryId, appFlg);
 
 				Log.e(TAG, "activityName :" + activityName + ",flags:"
 						+ reInfo.activityInfo.flags + ",pkgName:" + pkgName
