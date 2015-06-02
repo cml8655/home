@@ -100,7 +100,7 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 
 			// TableLayout.LayoutParams
 			TableRow.LayoutParams itemParams = new TableRow.LayoutParams(
-					appWidth, tableRowHeight);
+					TableRow.LayoutParams.MATCH_PARENT, tableRowHeight);
 			itemParams.gravity=Gravity.CENTER;
 
 			appView.setTag(data.get(i));
