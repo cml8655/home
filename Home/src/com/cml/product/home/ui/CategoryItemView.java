@@ -9,8 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -44,6 +42,11 @@ public class CategoryItemView {
 		// 一行显示的app
 		TableRow row = new TableRow(context);
 
+		TableLayout.LayoutParams params = new TableLayout.LayoutParams(
+				TableLayout.LayoutParams.MATCH_PARENT, 0);
+		params.weight = 1;
+		row.setLayoutParams(params);
+
 		LayoutInflater inflator = LayoutInflater.from(context);
 
 		// 为每个app设置名称和图标
@@ -68,10 +71,10 @@ public class CategoryItemView {
 			}
 
 			// TableLayout.LayoutParams
-			TableRow.LayoutParams params = new TableRow.LayoutParams(0,
+			TableRow.LayoutParams itemParams = new TableRow.LayoutParams(0,
 					TableRow.LayoutParams.MATCH_PARENT, 1);
 
-			row.addView(appView, params);
+			row.addView(appView, itemParams);
 
 		}
 
