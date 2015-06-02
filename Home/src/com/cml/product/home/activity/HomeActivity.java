@@ -86,7 +86,7 @@ public class HomeActivity extends BaseActivity {
 				long id = helper.insertApp(appName, packageName, app.icon,
 						categoryId, appFlg);
 
-				Log.e(TAG, "insert app values :" + id);
+				Log.e(TAG, "insert app values :" + id+",flags:"+app.flags+",name:"+appName);
 			}
 
 			return true;
