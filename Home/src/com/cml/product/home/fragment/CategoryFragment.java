@@ -82,7 +82,7 @@ public class CategoryFragment extends BaseFragment {
 					getActivity(),
 					AppContract.URI,
 					AppContract.QUERY_ALL,
-					ColumnDef.App.CATEGORY + "= ? limit 16",
+					ColumnDef.App.CATEGORY + "= ? ",
 					new String[] { String.valueOf(args.getInt(ARGUMENT_TYPE)) },
 					null);
 		}

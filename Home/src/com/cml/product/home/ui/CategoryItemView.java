@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +48,8 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 	private List<AppModel> data;
 	private PackageManager pm;
 	private OnItemTouchListener listener;
+	private int appWidth;
+	private int tableRowHeight;
 
 	public CategoryItemView(Context context, List<AppModel> data,
 			OnItemTouchListener listener) {
@@ -54,6 +57,11 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 		this.data = data;
 		this.listener = listener;
 		pm = context.getPackageManager();
+
+		appWidth = context.getResources().getDimensionPixelSize(
+				R.dimen.app_width);
+		tableRowHeight = context.getResources().getDimensionPixelSize(
+				R.dimen.tablerow_height);
 	}
 
 	public TableRow getTableRow(int start, int end) {
@@ -62,9 +70,9 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 		TableRow row = new TableRow(context);
 
 		TableLayout.LayoutParams params = new TableLayout.LayoutParams(
-				TableLayout.LayoutParams.MATCH_PARENT, 0);
-		params.weight = 1;
+				TableLayout.LayoutParams.MATCH_PARENT, tableRowHeight);
 		row.setLayoutParams(params);
+		row.setBackgroundColor(Color.GREEN);
 
 		LayoutInflater inflator = LayoutInflater.from(context);
 
@@ -80,7 +88,7 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 			ImageView appIconView = (ImageView) appView
 					.findViewById(R.id.app_icon);
 
-			appNameView.setText(app.getAppName() + ":" + i);
+			appNameView.setText(app.getAppName());
 
 			try {
 				Drawable icon = pm.getApplicationIcon(app.getPackageName());
@@ -90,8 +98,8 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 			}
 
 			// TableLayout.LayoutParams
-			TableRow.LayoutParams itemParams = new TableRow.LayoutParams(0,
-					TableRow.LayoutParams.MATCH_PARENT, 1);
+			TableRow.LayoutParams itemParams = new TableRow.LayoutParams(
+					appWidth, tableRowHeight);
 
 			appView.setTag(data.get(i));
 			appView.setOnClickListener(this);
