@@ -22,11 +22,16 @@ import com.cml.product.home.db.def.ColumnDef;
 import com.cml.product.home.fragment.helper.AppItemTouchHelper;
 import com.cml.product.home.model.AppModel;
 import com.cml.product.home.ui.CategoryItemView;
+import com.cml.product.home.util.DisplayUtil;
+import com.cml.product.home.util.PrefUtil;
+import com.cml.product.home.util.ToastUtil;
 
 public class CategoryFragment extends BaseFragment {
 
 	public static final String ARGUMENT_TITLE = "CategoryFragment.ARGUMENT_TITLE";
 	public static final String ARGUMENT_TYPE = "CategoryFragment.ARGUMENT_TYPE";
+
+	private static final Integer DEFAULT_PADDING = 30;
 
 	// 一行显示app的数量
 	private static final Integer ROW_COUNT = 4;
@@ -37,6 +42,9 @@ public class CategoryFragment extends BaseFragment {
 
 	private String title;
 	private Integer type;
+
+	private int fragmentWidth;
+	private int fragmentHeight;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -52,6 +60,11 @@ public class CategoryFragment extends BaseFragment {
 			title = extras.getString(ARGUMENT_TITLE);
 			type = extras.getInt(ARGUMENT_TYPE);
 		}
+		fragmentWidth = DisplayUtil.getWindowWidth(getActivity());
+		fragmentHeight = DisplayUtil.getWindowHeight(getActivity())
+				- getResources().getDimensionPixelSize(R.dimen.main_title)
+				- getResources().getDimensionPixelSize(R.dimen.main_footer)
+				- DEFAULT_PADDING;
 	}
 
 	@Override
@@ -109,16 +122,15 @@ public class CategoryFragment extends BaseFragment {
 				AppModel appModel = new AppModel(packageName, iconRes, appName);
 				appList.add(appModel);
 			}
-			
+
 			int len = appList.size();
 
 			CategoryItemView itemView = new CategoryItemView(getActivity(),
-					appList, new AppItemTouchHelper(getActivity()));
+					appList, fragmentWidth, fragmentHeight,
+					new AppItemTouchHelper(getActivity()));
 
 			// 4个一组，添加到界面上显示
 			for (int i = 0; i < len; i += ROW_COUNT) {
-
-				Log.d(TAG, "添加row到显示上。。。" + i);
 
 				if (i + ROW_COUNT >= len) {
 					// 结束

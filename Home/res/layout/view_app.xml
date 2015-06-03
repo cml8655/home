@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/app_icon"
         android:layout_width="80dp"
-        android:layout_height="55dp" />
+        android:layout_height="50dp" />
 
     <TextView
         android:id="@+id/app_name"

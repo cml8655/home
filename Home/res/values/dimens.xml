@@ -2,4 +2,6 @@
 <resources>
     <dimen name="app_width">90dp</dimen>
     <dimen name="tablerow_height">100dp</dimen>
+    <dimen name="main_title">50dp</dimen>
+    <dimen name="main_footer">65dp</dimen>
 </resources>
