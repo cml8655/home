@@ -1,6 +1,8 @@
 package com.cml.product.home.fragment.helper;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import com.cml.product.home.model.AppModel;
@@ -25,6 +27,11 @@ public class AppItemTouchHelper implements CategoryItemView.OnItemTouchListener 
 	@Override
 	public void onClick(View v, AppModel data) {
 		ToastUtil.show(context, "hhh onClick :" + data.getAppName());
+		Intent intent = new Intent();
+		ComponentName cm = new ComponentName(data.getPackageName(),
+				data.getActivityName());
+		intent.setComponent(cm);
+		context.startActivity(intent);
 	}
 
 	@Override

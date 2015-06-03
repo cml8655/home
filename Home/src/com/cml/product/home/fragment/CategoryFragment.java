@@ -118,8 +118,11 @@ public class CategoryFragment extends BaseFragment {
 						.getColumnIndex(ColumnDef.App.PACKAGE));
 				Integer iconRes = data.getInt(data
 						.getColumnIndex(ColumnDef.App.ICON));
+				String activityName = data.getString(data
+						.getColumnIndex(ColumnDef.App.ACTIVITY_NAME));
 
 				AppModel appModel = new AppModel(packageName, iconRes, appName);
+				appModel.setActivityName(activityName);
 				appList.add(appModel);
 			}
 
