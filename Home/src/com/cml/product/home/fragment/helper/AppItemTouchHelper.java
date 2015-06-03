@@ -1,8 +1,12 @@
 package com.cml.product.home.fragment.helper;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -60,6 +64,20 @@ public class AppItemTouchHelper implements CategoryItemView.OnItemTouchListener 
 	@Override
 	public boolean onLongClick(View v, AppModel data) {
 		ToastUtil.show(context, "hhh onLongClick:" + data.getAppName());
+		final String pgName = data.getPackageName();
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setMessage("确定卸载：" + data.getAppName());
+		builder.setPositiveButton("好滴", new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+				intent.setData(Uri.parse("package:" + pgName));
+				context.startActivity(intent);
+
+			}
+		});
+		builder.create().show();
 		return false;
 	}
 

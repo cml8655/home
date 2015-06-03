@@ -9,7 +9,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,6 @@ import com.cml.product.home.fragment.helper.AppItemTouchHelper;
 import com.cml.product.home.model.AppModel;
 import com.cml.product.home.ui.CategoryItemView;
 import com.cml.product.home.util.DisplayUtil;
-import com.cml.product.home.util.PrefUtil;
-import com.cml.product.home.util.ToastUtil;
 
 public class CategoryFragment extends BaseFragment {
 
