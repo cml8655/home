@@ -50,7 +50,7 @@ public class AppItemTouchHelper implements CategoryItemView.OnItemTouchListener 
 				ComponentName cm = new ComponentName(data.getPackageName(),
 						data.getActivityName());
 				intent.setComponent(cm);
-//				context.startActivity(intent);
+				context.startActivity(intent);
 			}
 		});
 		v.findViewById(R.id.app_icon).startAnimation(anim);
