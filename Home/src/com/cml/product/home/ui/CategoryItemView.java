@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.cml.product.home.R;
 import com.cml.product.home.model.AppModel;
+import com.cml.product.home.util.DisplayUtil;
+import com.cml.product.home.util.PrefUtil;
 
 /**
  * 分类App信息，返回TableRow
@@ -59,8 +61,8 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 		this.listener = listener;
 		pm = context.getPackageManager();
 
-		appWidth = context.getResources().getDimensionPixelSize(
-				R.dimen.app_width);
+		appWidth = DisplayUtil.getWindowWidth(context)
+				/ PrefUtil.getAppRowCount(context);
 		tableRowHeight = context.getResources().getDimensionPixelSize(
 				R.dimen.tablerow_height);
 	}
@@ -100,8 +102,8 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 
 			// TableLayout.LayoutParams
 			TableRow.LayoutParams itemParams = new TableRow.LayoutParams(
-					TableRow.LayoutParams.MATCH_PARENT, tableRowHeight);
-			itemParams.gravity=Gravity.CENTER;
+					appWidth, tableRowHeight);
+			itemParams.gravity = Gravity.CENTER;
 
 			appView.setTag(data.get(i));
 			appView.setOnClickListener(this);
