@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <rotate
+        android:duration="100"
+        android:fromDegrees="0"
+        android:interpolator="@android:anim/anticipate_overshoot_interpolator"
+        android:pivotX="50%p"
+        android:pivotY="25%p"
+        android:toDegrees="0" >
+    </rotate>
+
+    <scale
+        android:duration="100"
+        android:fromXScale="1"
+        android:fromYScale="1"
+        android:pivotX="50%p"
+        android:pivotY="25%p"
+        android:toXScale="1.2"
+        android:toYScale="1.2" >
+    </scale>
+
+</set>
