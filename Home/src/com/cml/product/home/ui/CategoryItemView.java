@@ -42,9 +42,9 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 	 */
 	public static interface OnItemTouchListener {
 
-		void onClick(View v, AppModel data);
+		void onClick(View v, final AppModel data);
 
-		boolean onLongClick(View v, AppModel data);
+		boolean onLongClick(View v,final AppModel data);
 	}
 
 	private Context context;
