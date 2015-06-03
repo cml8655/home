@@ -88,6 +88,11 @@ public class CategoryIndicatorFragment extends BaseFragment {
 		indicatorView.setItemClickListener(itemClick);
 		indicatorView.setDirection(IndicatorDirection.RIGHT);
 
+		// 设置touch事件冒泡到dispatchTouchView
+		ViewGroup dispatchTouchView = (ViewGroup) view
+				.findViewById(R.id.indicator_container);
+		indicatorView.setDispatchTouchView(dispatchTouchView);
+
 		getLoaderManager().initLoader(LOADER_CATEGORY, null,
 				new CategoryLoaderCallback());
 

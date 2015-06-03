@@ -1,5 +1,6 @@
 package com.cml.product.home.ui;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cml.product.home.R;
@@ -39,6 +41,9 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 	private int viewWith;
 	private int viewHeight;
+
+	/** 冒泡事件到的view */
+	private WeakReference<ViewGroup> dispatchTouchView;
 
 	private int itemWitdh;
 	private int itemIndicatorWidth = 20;
@@ -94,7 +99,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 		@Override
 		public boolean onDown(MotionEvent e) {
-			return false;
+			return true;
 		}
 
 		@Override
@@ -249,7 +254,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 		if (childCount == 0) {
 			return;
 		}
-		
+
 		leftViewGroup.clear();
 		rightViewGroup.clear();
 
@@ -307,6 +312,18 @@ public class CategoryIndicatorView extends ViewGroup implements
 		}
 
 		hideIndicators();
+	}
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+
+		if (null != dispatchTouchView) {
+			ViewGroup view = dispatchTouchView.get();
+			if (null != view && view.getChildCount() > 0) {
+				view.dispatchTouchEvent(ev);
+			}
+		}
+		return super.dispatchTouchEvent(ev);
 	}
 
 	@Override
@@ -378,6 +395,10 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 	public void setDirection(IndicatorDirection direction) {
 		this.direction = direction;
+	}
+
+	public void setDispatchTouchView(ViewGroup dispatchTouchView) {
+		this.dispatchTouchView = new WeakReference<ViewGroup>(dispatchTouchView);
 	}
 
 	public static enum IndicatorDirection {
