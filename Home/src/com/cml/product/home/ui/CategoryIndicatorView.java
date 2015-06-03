@@ -20,7 +20,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cml.product.home.R;
@@ -31,7 +30,8 @@ public class CategoryIndicatorView extends ViewGroup implements
 	private static final String TAG = CategoryIndicatorView.class
 			.getSimpleName();
 	private static final int ITEM_PADDING = 30;
-	public static final int FLYING_DISTANCE = 50;
+	public static final int FLYING_Y_RANGE = 100;
+	public static final int FLYING_DISTANCE_X = 100;
 
 	private List<Indicator> data;
 	private IndicatorDirection direction;
@@ -127,11 +127,14 @@ public class CategoryIndicatorView extends ViewGroup implements
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 				float velocityY) {
 
-			float distance = e2.getX() - e1.getX();
+			float distanceX = e2.getX() - e1.getX();
+			float distanceY = e2.getY() - e1.getY();
 
-			if (flyable && Math.abs(distance) >= FLYING_DISTANCE) {
+			// 水平方向滑动距离大于指定X位移，y方向在指定范围内
+			if (flyable && Math.abs(distanceX) >= FLYING_DISTANCE_X
+					&& Math.abs(distanceY) <= FLYING_Y_RANGE) {
 
-				if (distance > 0) {
+				if (distanceX > 0) {
 					onFlyingAnimator(IndicatorDirection.RIGHT);
 				} else {
 					onFlyingAnimator(IndicatorDirection.LEFT);
