@@ -26,7 +26,6 @@ public class AppItemTouchHelper implements CategoryItemView.OnItemTouchListener 
 
 	@Override
 	public void onClick(View v, AppModel data) {
-		ToastUtil.show(context, "hhh onClick :" + data.getAppName());
 		Intent intent = new Intent();
 		ComponentName cm = new ComponentName(data.getPackageName(),
 				data.getActivityName());
