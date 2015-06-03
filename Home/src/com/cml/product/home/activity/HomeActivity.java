@@ -1,5 +1,6 @@
 package com.cml.product.home.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.DialogFragment;
@@ -19,6 +20,7 @@ import com.cml.product.home.constant.Constant;
 import com.cml.product.home.db.helper.AppHelper;
 import com.cml.product.home.fragment.CategoryIndicatorFragment;
 import com.cml.product.home.fragment.dialog.LoadingFragment;
+import com.cml.product.home.model.AppModel;
 import com.cml.product.home.util.PrefUtil;
 
 public class HomeActivity extends BaseActivity {
@@ -53,7 +55,6 @@ public class HomeActivity extends BaseActivity {
 
 	private class AppInitTask extends AsyncTask<Void, Void, Boolean> {
 
-		private static final String PACKAGE_GAME = "game";
 		private static final String TAG = "AppInitTask";
 
 		private DialogFragment loadingDialog;
@@ -77,32 +78,37 @@ public class HomeActivity extends BaseActivity {
 			// Collections.sort(resolveInfos,
 			// new ResolveInfo.DisplayNameComparator(pm));
 
-			for (ResolveInfo reInfo : resolveInfos) {
-				String activityName = reInfo.activityInfo.name; // 获得该应用程序的启动Activity的name
-				String pkgName = reInfo.activityInfo.packageName; // 获得应用程序的包名
-				String appLabel = (String) reInfo.loadLabel(pm); // 获得应用程序的Label
+			List<AppModel> apps = new ArrayList<AppModel>(resolveInfos.size());
 
-				Integer categoryId = Constant.AppType.TYPE_ETC;
-				Integer appFlg = Constant.AppFlg.FLAG_ETC;
+			if (resolveInfos.size() > 0) {
 
-				// 系统应用
-				if (isSystemApp(pkgName)) {
-					categoryId = Constant.AppType.TYPE_SYSTEM;
-					appFlg = Constant.AppFlg.FLAG_SYSTEM;
+				for (ResolveInfo reInfo : resolveInfos) {
+
+					String activityName = reInfo.activityInfo.name; // 获得该应用程序的启动Activity的name
+					String pkgName = reInfo.activityInfo.packageName; // 获得应用程序的包名
+					String appName = reInfo.loadLabel(pm).toString(); // 获得应用程序的Label
+
+					Integer categoryId = Constant.AppType.TYPE_ETC;
+					Integer appFlg = Constant.AppFlg.FLAG_ETC;
+
+					// 系统应用
+					if (isSystemApp(pkgName)) {
+						categoryId = Constant.AppType.TYPE_SYSTEM;
+						appFlg = Constant.AppFlg.FLAG_SYSTEM;
+					}
+
+					AppModel model = new AppModel(pkgName, reInfo.icon,
+							appName, activityName, categoryId, appFlg);
+					apps.add(model);
+
+					Log.e(TAG, "activityName :" + activityName + ",flags:"
+							+ reInfo.activityInfo.flags + ",pkgName:" + pkgName
+							+ ",appLabel:" + appName);
 				}
 
-				// // 为应用程序的启动Activity 准备Intent
-				// Intent launchIntent = new Intent();
-				// launchIntent.setComponent(new ComponentName(pkgName,
-				// activityName));
-
-				long id = helper.insertApp(appLabel, pkgName, activityName,
-						reInfo.icon, categoryId, appFlg);
-
-				Log.e(TAG, "activityName :" + activityName + ",flags:"
-						+ reInfo.activityInfo.flags + ",pkgName:" + pkgName
-						+ ",appLabel:" + appLabel + ",,插入ID:" + id);
+				helper.insertApp(apps);
 			}
+
 		}
 
 		private boolean isSystemApp(String packageName) {

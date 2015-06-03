@@ -1,8 +1,13 @@
 package com.cml.product.home.db.provider;
 
+import java.util.ArrayList;
+
 import android.content.ContentProvider;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -98,6 +103,27 @@ public abstract class BaseProvider extends ContentProvider {
 		}
 
 		return null;
+	}
+
+	@Override
+	public int bulkInsert(Uri uri, ContentValues[] values) {
+
+		SQLiteDatabase db = helper.getWritableDatabase();
+		db.beginTransaction();
+		int successCount = 0;
+
+		try {
+			for (ContentValues value : values) {
+				db.insert(getTable(), null, value);
+				successCount++;
+			}
+			db.setTransactionSuccessful();
+
+		} finally {
+			db.endTransaction();
+		}
+
+		return successCount;
 	}
 
 	abstract int getMatchCode(Uri uri);
