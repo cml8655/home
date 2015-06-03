@@ -108,9 +108,8 @@ public class CategoryFragment extends BaseFragment {
 
 				AppModel appModel = new AppModel(packageName, iconRes, appName);
 				appList.add(appModel);
-
 			}
-
+			
 			int len = appList.size();
 
 			CategoryItemView itemView = new CategoryItemView(getActivity(),

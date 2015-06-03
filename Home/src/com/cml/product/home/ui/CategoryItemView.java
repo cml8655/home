@@ -62,9 +62,9 @@ public class CategoryItemView implements OnClickListener, OnLongClickListener {
 		pm = context.getPackageManager();
 
 		appWidth = DisplayUtil.getWindowWidth(context)
+				/ PrefUtil.getAppColumnCount(context);
+		tableRowHeight = DisplayUtil.getWindowHeight(context)
 				/ PrefUtil.getAppRowCount(context);
-		tableRowHeight = context.getResources().getDimensionPixelSize(
-				R.dimen.tablerow_height);
 	}
 
 	public TableRow getTableRow(int start, int end) {

@@ -12,4 +12,11 @@ public interface Constant {
 		Integer FLAG_SYSTEM = 1;
 		Integer FLAG_ETC = 2;
 	}
+
+	interface Common {
+		/**APP行数*/
+		Integer COUNT_APP_ROW = 5;
+		/**APP列数*/
+		Integer COUNT_APP_COLUMN = 4;
+	}
 }

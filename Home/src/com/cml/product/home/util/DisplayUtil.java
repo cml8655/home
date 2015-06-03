@@ -17,4 +17,18 @@ public class DisplayUtil {
 		return metrics.widthPixels;
 
 	}
+
+	/**
+	 * 获取屏幕的高度
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static int getWindowHeight(Context context) {
+
+		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+
+		return metrics.heightPixels;
+
+	}
 }
