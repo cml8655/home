@@ -30,7 +30,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 	private static final String TAG = CategoryIndicatorView.class
 			.getSimpleName();
 	private static final int ITEM_PADDING = 30;
-	public static final int FLYING_Y_RANGE = 100;
+	public static final int FLYING_Y_RANGE = 150;
 	public static final int FLYING_DISTANCE_X = 100;
 
 	private List<Indicator> data;
