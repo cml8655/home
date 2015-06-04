@@ -320,13 +320,18 @@ public class CategoryIndicatorView extends ViewGroup implements
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 
+		boolean handlerResult = super.dispatchTouchEvent(ev);
+
+		Log.e(TAG, "dispatchTouchEvent= dispatchTouchEvent===>" + handlerResult);
+
 		if (null != dispatchTouchView) {
 			ViewGroup view = dispatchTouchView.get();
 			if (null != view && view.getChildCount() > 0) {
 				view.dispatchTouchEvent(ev);
 			}
 		}
-		return super.dispatchTouchEvent(ev);
+
+		return handlerResult;
 	}
 
 	@Override
@@ -415,7 +420,10 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		return dector.onTouchEvent(event);
+		boolean dectorResult = dector.onTouchEvent(event);
+		Log.e(TAG, "onTouch====>" + dectorResult);
+
+		return dectorResult;
 	}
 
 	public static interface OnItemClickListener {
