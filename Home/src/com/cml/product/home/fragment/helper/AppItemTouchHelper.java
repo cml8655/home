@@ -13,6 +13,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 
 import com.cml.product.home.R;
+import com.cml.product.home.db.helper.AppHelper;
 import com.cml.product.home.model.AppModel;
 import com.cml.product.home.ui.CategoryItemView;
 import com.cml.product.home.util.ToastUtil;
@@ -78,10 +79,11 @@ public class AppItemTouchHelper implements CategoryItemView.OnItemTouchListener 
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
-				intent.setData(Uri.parse("package:" + pgName));
-				context.startActivity(intent);
-
+				// Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+				// intent.setData(Uri.parse("package:" + pgName));
+				// context.startActivity(intent);
+				long id = new AppHelper(context).delApp(pgName);
+				ToastUtil.show(context, "爱喝酸奶：" + pgName + ",," + id);
 			}
 		});
 		builder.create().show();

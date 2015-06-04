@@ -14,6 +14,7 @@ import com.cml.product.home.model.AppModel;
 import com.cml.product.home.util.AppUtil;
 
 public class AppInstallReceiver extends BroadcastReceiver {
+
 	private static final String TAG = AppInstallReceiver.class.getSimpleName();
 
 	@Override
@@ -24,7 +25,8 @@ public class AppInstallReceiver extends BroadcastReceiver {
 		if (Intent.ACTION_PACKAGE_ADDED.equals(intent.getAction())) {
 
 			try {
-				String packageName = intent.getDataString();
+				String packageName = intent.getDataString().replace("package:",
+						"");
 
 				// 获取app信息
 				PackageManager pm = context.getPackageManager();
