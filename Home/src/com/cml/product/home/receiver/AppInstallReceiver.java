@@ -1,5 +1,7 @@
 package com.cml.product.home.receiver;
 
+import com.cml.product.home.util.ToastUtil;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +15,10 @@ public class AppInstallReceiver extends BroadcastReceiver {
 
 		Log.d(TAG, "AppInstallReceiver===>" + intent.getAction());
 
-		if (Intent.ACTION_INSTALL_PACKAGE.equals(intent.getAction())) {
-			//TODO 进行新app的操作
+		if (Intent.ACTION_PACKAGE_ADDED.equals(intent.getAction())) {
+			String packageName = intent.getDataString();
+			Log.d(TAG, "AppInstallReceiver===>" + packageName);
+			ToastUtil.show(context, "安装app：" + packageName);
 		}
 	}
 
