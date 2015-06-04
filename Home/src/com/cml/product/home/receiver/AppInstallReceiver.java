@@ -17,6 +17,9 @@ public class AppInstallReceiver extends BroadcastReceiver {
 
 		if (Intent.ACTION_PACKAGE_ADDED.equals(intent.getAction())) {
 			String packageName = intent.getDataString();
+			//TODO step1 获取app信息
+			//TODO step2 插入到数据库
+			//TODO step3 发出通知，刷新页面
 			Log.d(TAG, "AppInstallReceiver===>" + packageName);
 			ToastUtil.show(context, "安装app：" + packageName);
 		}

@@ -13,6 +13,8 @@ public class AppUninstallReceiver extends BroadcastReceiver {
 		// 接收卸载广播
 		if (Intent.ACTION_PACKAGE_REMOVED.equals(intent.getAction())) {
 			String packageName = intent.getDataString();
+			//TODO step1 删除本地app信息
+			//TODO step2 发出通知，提示刷新界面
 			ToastUtil.show(context, "新卸载app："+packageName);
 		}
 	}

@@ -5,7 +5,11 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -16,6 +20,7 @@ import android.widget.TableLayout;
 
 import com.cml.product.home.R;
 import com.cml.product.home.activity.HomeActivity;
+import com.cml.product.home.constant.IntentAction;
 import com.cml.product.home.db.contract.AppContract;
 import com.cml.product.home.db.def.ColumnDef;
 import com.cml.product.home.fragment.helper.AppItemTouchHelper;
@@ -36,6 +41,8 @@ public class CategoryFragment extends BaseFragment {
 
 	private HomeActivity homeActivity;
 	private TableLayout appContainer;
+	private LoaderCallbacks<Cursor> loaderCallback;
+	private BroadcastReceiver appChangeReceiver;// app 卸载/安装监听
 
 	private String title;
 	private Integer type;
@@ -62,6 +69,22 @@ public class CategoryFragment extends BaseFragment {
 				- getResources().getDimensionPixelSize(R.dimen.main_title)
 				- getResources().getDimensionPixelSize(R.dimen.main_footer)
 				- DEFAULT_PADDING;
+		// 初始化app变化监听
+		appChangeReceiver = new AppChangeReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(IntentAction.Broadcast.APP_INSTALLED);
+		filter.addAction(IntentAction.Broadcast.APP_UNINSTALLED);
+		getActivity().registerReceiver(appChangeReceiver, filter);
+	}
+
+	@Override
+	public void onDestroy() {
+		//取消app变化监听
+		if (null != appChangeReceiver) {
+			getActivity().unregisterReceiver(appChangeReceiver);
+		}
+
+		super.onDestroy();
 	}
 
 	@Override
@@ -78,11 +101,34 @@ public class CategoryFragment extends BaseFragment {
 		if (null != homeActivity) {
 			homeActivity.setCategoryTitle(title);
 		}
-
-		getLoaderManager().initLoader(LOADER_ID, getArguments(),
-				new AppLoaderCallback());
+		// 加载app数据
+		loaderCallback = new AppLoaderCallback();
+		getLoaderManager()
+				.initLoader(LOADER_ID, getArguments(), loaderCallback);
 	}
 
+	/**
+	 * app卸载，安装后更新
+	 * 
+	 * @author teamlab
+	 *
+	 */
+	private class AppChangeReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			getLoaderManager().restartLoader(LOADER_ID, getArguments(),
+					loaderCallback);
+		}
+
+	}
+
+	/***
+	 * 加载app数据loader
+	 * 
+	 * @author teamlab
+	 *
+	 */
 	private class AppLoaderCallback implements LoaderCallbacks<Cursor> {
 
 		@Override
@@ -128,6 +174,9 @@ public class CategoryFragment extends BaseFragment {
 			CategoryItemView itemView = new CategoryItemView(getActivity(),
 					appList, fragmentWidth, fragmentHeight,
 					new AppItemTouchHelper(getActivity()));
+
+			// 首先清空所有view
+			appContainer.removeAllViews();
 
 			// 4个一组，添加到界面上显示
 			for (int i = 0; i < len; i += ROW_COUNT) {
