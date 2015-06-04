@@ -78,7 +78,7 @@ public class AppItemTouchHelper implements CategoryItemView.OnItemTouchListener 
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+				Intent intent = new Intent(Intent.ACTION_DELETE);
 				intent.setData(Uri.parse("package:" + pgName));
 				context.startActivity(intent);
 			}
