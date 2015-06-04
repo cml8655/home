@@ -20,6 +20,12 @@ public class AppHelper extends BaseHelper {
 		super(context);
 	}
 
+	public long delApp(String pgName) {
+
+		return context.getContentResolver().delete(URI,
+				ColumnDef.App.PACKAGE + "=?", new String[] { pgName });
+	}
+
 	/**
 	 * 插入APP数据
 	 * 
@@ -35,10 +41,32 @@ public class AppHelper extends BaseHelper {
 		ContentValues value = new ContentValues();
 		value.put(ColumnDef.App.ICON, iconRes);
 		value.put(ColumnDef.App.NAME, name);
-		value.put(ColumnDef.App.ACTIVITY_NAME, activityName);
 		value.put(ColumnDef.App.PACKAGE, packageName);
 		value.put(ColumnDef.App.CATEGORY, categoryId);
 		value.put(ColumnDef.App.APP_FLG, appFlg);
+		value.put(ColumnDef.App.START_TIMES, 0);
+
+		Uri result = context.getContentResolver().insert(URI, value);
+		return ContentUris.parseId(result);
+	}
+
+	/**
+	 * 插入APP数据
+	 * 
+	 * @param name
+	 * @param packageName
+	 * @param categoryId
+	 * @param appFlg
+	 * @return
+	 */
+	public long insertApp(AppModel model) {
+
+		ContentValues value = new ContentValues();
+		value.put(ColumnDef.App.ICON, model.getIconRes());
+		value.put(ColumnDef.App.NAME, model.getAppName());
+		value.put(ColumnDef.App.PACKAGE, model.getPackageName());
+		value.put(ColumnDef.App.CATEGORY, model.getCategoryId());
+		value.put(ColumnDef.App.APP_FLG, model.getAppFlg());
 		value.put(ColumnDef.App.START_TIMES, 0);
 
 		Uri result = context.getContentResolver().insert(URI, value);
@@ -62,7 +90,6 @@ public class AppHelper extends BaseHelper {
 			ContentValues value = new ContentValues();
 			value.put(ColumnDef.App.ICON, data.getIconRes());
 			value.put(ColumnDef.App.NAME, data.getAppName());
-			value.put(ColumnDef.App.ACTIVITY_NAME, data.getActivityName());
 			value.put(ColumnDef.App.PACKAGE, data.getPackageName());
 			value.put(ColumnDef.App.CATEGORY, data.getCategoryId());
 			value.put(ColumnDef.App.APP_FLG, data.getAppFlg());

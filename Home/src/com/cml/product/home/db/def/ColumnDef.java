@@ -15,7 +15,6 @@ public interface ColumnDef {
 	}
 
 	interface App extends BaseColumns {
-		String ACTIVITY_NAME = "activity_name";
 		String NAME = "app_name";
 		String PACKAGE = "app_package";
 		String CATEGORY = "category_id";

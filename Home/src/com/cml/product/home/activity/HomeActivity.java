@@ -21,6 +21,7 @@ import com.cml.product.home.db.helper.AppHelper;
 import com.cml.product.home.fragment.CategoryIndicatorFragment;
 import com.cml.product.home.fragment.dialog.LoadingFragment;
 import com.cml.product.home.model.AppModel;
+import com.cml.product.home.util.AppUtil;
 import com.cml.product.home.util.PrefUtil;
 
 public class HomeActivity extends BaseActivity {
@@ -73,18 +74,12 @@ public class HomeActivity extends BaseActivity {
 			List<ResolveInfo> resolveInfos = pm.queryIntentActivities(
 					mainIntent, PackageManager.GET_ACTIVITIES);
 
-			// 调用系统排序 ， 根据name排序
-			// 该排序很重要，否则只能显示系统应用，而不能列出第三方应用程序
-			// Collections.sort(resolveInfos,
-			// new ResolveInfo.DisplayNameComparator(pm));
-
 			List<AppModel> apps = new ArrayList<AppModel>(resolveInfos.size());
 
 			if (resolveInfos.size() > 0) {
 
 				for (ResolveInfo reInfo : resolveInfos) {
 
-					String activityName = reInfo.activityInfo.name; // 获得该应用程序的启动Activity的name
 					String pkgName = reInfo.activityInfo.packageName; // 获得应用程序的包名
 					String appName = reInfo.loadLabel(pm).toString(); // 获得应用程序的Label
 
@@ -92,34 +87,22 @@ public class HomeActivity extends BaseActivity {
 					Integer appFlg = Constant.AppFlg.FLAG_ETC;
 
 					// 系统应用
-					if (isSystemApp(pkgName)) {
+					if (AppUtil.isSystemApp(getApplicationContext(), pkgName)) {
 						categoryId = Constant.AppType.TYPE_SYSTEM;
 						appFlg = Constant.AppFlg.FLAG_SYSTEM;
 					}
 
 					AppModel model = new AppModel(pkgName, reInfo.icon,
-							appName, activityName, categoryId, appFlg);
+							appName, categoryId, appFlg);
 					apps.add(model);
 
-					Log.e(TAG, "activityName :" + activityName + ",flags:"
-							+ reInfo.activityInfo.flags + ",pkgName:" + pkgName
-							+ ",appLabel:" + appName);
+					Log.e(TAG, "flags:" + reInfo.activityInfo.flags
+							+ ",pkgName:" + pkgName + ",appLabel:" + appName);
 				}
 
 				helper.insertApp(apps);
 			}
 
-		}
-
-		private boolean isSystemApp(String packageName) {
-			try {
-				PackageInfo info = getPackageManager().getPackageInfo(
-						packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
-				return ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0);
-			} catch (NameNotFoundException e) {
-				Log.e(TAG, e.getMessage());
-			}
-			return false;
 		}
 
 		@Override

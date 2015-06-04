@@ -1,12 +1,12 @@
 package com.cml.product.home.fragment.helper;
 
 import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -24,6 +24,8 @@ import com.cml.product.home.util.ToastUtil;
  *
  */
 public class AppItemTouchHelper implements CategoryItemView.OnItemTouchListener {
+
+	private static final String TAG = "AppItemTouchHelper";
 
 	private Context context;
 
@@ -50,11 +52,16 @@ public class AppItemTouchHelper implements CategoryItemView.OnItemTouchListener 
 
 			@Override
 			public void onAnimationEnd(Animation animation) {
-				Intent intent = new Intent();
-				ComponentName cm = new ComponentName(data.getPackageName(),
-						data.getActivityName());
-				intent.setComponent(cm);
-				context.startActivity(intent);
+				Intent intent = context.getPackageManager()
+						.getLaunchIntentForPackage(data.getPackageName());
+				if (null != intent) {
+					try {
+						context.startActivity(intent);
+					} catch (Exception e) {
+						Log.e(TAG, "启动app失败", e);
+					}
+				}
+
 			}
 		});
 		v.findViewById(R.id.app_icon).startAnimation(anim);

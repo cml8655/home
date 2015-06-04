@@ -4,16 +4,14 @@ public class AppModel {
 	private String packageName;
 	private int iconRes;
 	private String appName;
-	private String activityName;
 	private Integer categoryId;
 	private Integer appFlg;
 
 	public AppModel(String packageName, int iconRes, String appName,
-			String activityName, Integer categoryId, Integer appFlg) {
+			Integer categoryId, Integer appFlg) {
 		this.packageName = packageName;
 		this.iconRes = iconRes;
 		this.appName = appName;
-		this.activityName = activityName;
 		this.categoryId = categoryId;
 		this.appFlg = appFlg;
 	}
@@ -25,14 +23,6 @@ public class AppModel {
 	}
 
 	public AppModel() {
-	}
-
-	public String getActivityName() {
-		return activityName;
-	}
-
-	public void setActivityName(String activityName) {
-		this.activityName = activityName;
 	}
 
 	public Integer getCategoryId() {
