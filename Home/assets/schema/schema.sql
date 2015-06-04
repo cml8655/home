@@ -12,6 +12,7 @@ CREATE TABLE t_app(
 	 app_icon		integer,
 	 app_order		integer default 0,
 	 app_flg		integer default 0,
+	 show_flg		integer default 1,
 	 start_times	integer default 0
 );
 

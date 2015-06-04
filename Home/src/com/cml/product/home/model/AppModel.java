@@ -6,6 +6,17 @@ public class AppModel {
 	private String appName;
 	private Integer categoryId;
 	private Integer appFlg;
+	private Integer showFlg;
+
+	public AppModel(String packageName, int iconRes, String appName,
+			Integer categoryId, Integer appFlg, Integer showFlg) {
+		this.packageName = packageName;
+		this.iconRes = iconRes;
+		this.appName = appName;
+		this.categoryId = categoryId;
+		this.appFlg = appFlg;
+		this.showFlg = showFlg;
+	}
 
 	public AppModel(String packageName, int iconRes, String appName,
 			Integer categoryId, Integer appFlg) {
@@ -20,6 +31,14 @@ public class AppModel {
 		this.packageName = packageName;
 		this.iconRes = iconRes;
 		this.appName = appName;
+	}
+
+	public Integer getShowFlg() {
+		return showFlg;
+	}
+
+	public void setShowFlg(Integer showFlg) {
+		this.showFlg = showFlg;
 	}
 
 	public AppModel() {

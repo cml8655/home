@@ -22,5 +22,6 @@ public interface ColumnDef {
 		String ORDER = "app_order";
 		String APP_FLG = "app_flg";
 		String START_TIMES = "start_times";
+		String SHOW_FLG = "show_flg";
 	}
 }
