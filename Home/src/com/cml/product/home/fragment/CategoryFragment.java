@@ -11,7 +11,9 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.cml.product.home.activity.HomeActivity;
 import com.cml.product.home.constant.IntentAction;
 import com.cml.product.home.db.contract.AppContract;
 import com.cml.product.home.db.def.ColumnDef;
+import com.cml.product.home.db.helper.AppHelper;
 import com.cml.product.home.fragment.helper.AppItemTouchHelper;
 import com.cml.product.home.model.AppModel;
 import com.cml.product.home.ui.CategoryItemView;
@@ -43,6 +46,7 @@ public class CategoryFragment extends BaseFragment {
 	private TableLayout appContainer;
 	private LoaderCallbacks<Cursor> loaderCallback;
 	private BroadcastReceiver appChangeReceiver;// app 卸载/安装监听
+	private PackageManager pm;
 
 	private String title;
 	private Integer type;
@@ -75,11 +79,13 @@ public class CategoryFragment extends BaseFragment {
 		filter.addAction(IntentAction.Broadcast.APP_INSTALLED);
 		filter.addAction(IntentAction.Broadcast.APP_UNINSTALLED);
 		getActivity().registerReceiver(appChangeReceiver, filter);
+
+		pm = getActivity().getPackageManager();
 	}
 
 	@Override
 	public void onDestroy() {
-		//取消app变化监听
+		// 取消app变化监听
 		if (null != appChangeReceiver) {
 			getActivity().unregisterReceiver(appChangeReceiver);
 		}
@@ -161,6 +167,14 @@ public class CategoryFragment extends BaseFragment {
 						.getColumnIndex(ColumnDef.App.PACKAGE));
 				Integer iconRes = data.getInt(data
 						.getColumnIndex(ColumnDef.App.ICON));
+
+				if (null == pm.getLaunchIntentForPackage(packageName)) {
+					// 删除db数据
+					getActivity().sendBroadcast(
+							new Intent(IntentAction.Broadcast.APP_REMOVED, Uri
+									.parse(packageName)));
+					continue;
+				}
 
 				AppModel appModel = new AppModel(packageName, iconRes, appName);
 				appList.add(appModel);

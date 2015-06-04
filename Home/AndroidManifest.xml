@@ -48,6 +48,7 @@
         <receiver android:name=".receiver.AppUninstallReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="com.cml.product.home.constant.intentaction.broadcast.app_removed" />
 
                 <data android:scheme="package" />
             </intent-filter>

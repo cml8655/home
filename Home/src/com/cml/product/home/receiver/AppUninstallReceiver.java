@@ -15,8 +15,10 @@ public class AppUninstallReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-		// 接收卸载广播
-		if (Intent.ACTION_PACKAGE_REMOVED.equals(intent.getAction())) {
+		// app已经卸载了，删除db数据
+		if (IntentAction.Broadcast.APP_REMOVED.equals(intent.getAction())) {
+			new AppHelper(context).delApp(intent.getDataString());
+		} else if (Intent.ACTION_PACKAGE_REMOVED.equals(intent.getAction())) {
 
 			String packageName = intent.getDataString().replace("package:", "");
 			// 删除本地app信息
@@ -32,5 +34,4 @@ public class AppUninstallReceiver extends BroadcastReceiver {
 			}
 		}
 	}
-
 }
