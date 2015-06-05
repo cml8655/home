@@ -322,8 +322,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 		boolean handlerResult = super.dispatchTouchEvent(ev);
 
-		Log.e(TAG, "dispatchTouchEvent= dispatchTouchEvent===>" + handlerResult);
-
 		if (null != dispatchTouchView) {
 			ViewGroup view = dispatchTouchView.get();
 			if (null != view && view.getChildCount() > 0) {
@@ -421,7 +419,6 @@ public class CategoryIndicatorView extends ViewGroup implements
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		boolean dectorResult = dector.onTouchEvent(event);
-		Log.e(TAG, "onTouch====>" + dectorResult);
 
 		return dectorResult;
 	}

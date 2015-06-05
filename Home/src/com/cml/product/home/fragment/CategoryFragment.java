@@ -28,6 +28,7 @@ import com.cml.product.home.db.def.ColumnDef;
 import com.cml.product.home.db.helper.AppHelper;
 import com.cml.product.home.fragment.helper.AppItemTouchHelper;
 import com.cml.product.home.model.AppModel;
+import com.cml.product.home.ui.CategoryItemLayout;
 import com.cml.product.home.ui.CategoryItemView;
 import com.cml.product.home.util.DisplayUtil;
 
@@ -43,7 +44,7 @@ public class CategoryFragment extends BaseFragment {
 	private static final Integer LOADER_ID = 2001;
 
 	private HomeActivity homeActivity;
-	private TableLayout appContainer;
+	private CategoryItemLayout appContainer;
 	private LoaderCallbacks<Cursor> loaderCallback;
 	private BroadcastReceiver appChangeReceiver;// app 卸载/安装监听
 	private PackageManager pm;
@@ -102,7 +103,8 @@ public class CategoryFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
-		appContainer = (TableLayout) view.findViewById(R.id.category_container);
+		appContainer = (CategoryItemLayout) view
+				.findViewById(R.id.category_container);
 
 		if (null != homeActivity) {
 			homeActivity.setCategoryTitle(title);
@@ -180,28 +182,30 @@ public class CategoryFragment extends BaseFragment {
 				appList.add(appModel);
 			}
 
-			int len = appList.size();
+			appContainer.addItems(appList);
 
-			CategoryItemView itemView = new CategoryItemView(getActivity(),
-					appList, fragmentWidth, fragmentHeight,
-					new AppItemTouchHelper(getActivity()));
-
-			// 首先清空所有view
-			appContainer.removeAllViews();
-
-			// 4个一组，添加到界面上显示
-			for (int i = 0; i < len; i += ROW_COUNT) {
-
-				if (i + ROW_COUNT >= len) {
-					// 结束
-					View appViews = itemView.getTableRow(i, len);
-					appContainer.addView(appViews);
-					break;
-				}
-
-				View appViews = itemView.getTableRow(i, i + ROW_COUNT);
-				appContainer.addView(appViews);
-			}
+			// int len = appList.size();
+			//
+			// CategoryItemView itemView = new CategoryItemView(getActivity(),
+			// appList, fragmentWidth, fragmentHeight,
+			// new AppItemTouchHelper(getActivity()));
+			//
+			// // 首先清空所有view
+			// appContainer.removeAllViews();
+			//
+			// // 4个一组，添加到界面上显示
+			// for (int i = 0; i < len; i += ROW_COUNT) {
+			//
+			// if (i + ROW_COUNT >= len) {
+			// // 结束
+			// View appViews = itemView.getTableRow(i, len);
+			// appContainer.addView(appViews);
+			// break;
+			// }
+			//
+			// View appViews = itemView.getTableRow(i, i + ROW_COUNT);
+			// appContainer.addView(appViews);
+			// }
 
 		}
 
