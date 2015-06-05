@@ -114,7 +114,7 @@ public abstract class BaseProvider extends ContentProvider {
 
 		try {
 			for (ContentValues value : values) {
-				db.insert(getTable(), null, value);
+				db.replace(getTable(), null, value);
 				successCount++;
 			}
 			db.setTransactionSuccessful();
