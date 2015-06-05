@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cml.product.home.R;
@@ -140,6 +141,9 @@ public class CategoryItemLayout extends ViewGroup {
 				y += verticalPadding + child.getMeasuredHeight();
 			}
 
+			if(i>40){
+				break;
+			}
 		}
 
 	}

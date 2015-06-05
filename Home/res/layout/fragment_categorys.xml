@@ -2,13 +2,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:fillViewport="true"
-    android:measureAllChildren="true"
     android:layout_height="match_parent" >
 
     <com.cml.product.home.ui.CategoryItemLayout
         android:id="@+id/category_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_bright" >
     </com.cml.product.home.ui.CategoryItemLayout>
 
