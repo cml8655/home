@@ -36,18 +36,12 @@ public class HomeActivity extends BaseActivity {
 
 		titleView = (TextView) findViewById(R.id.home_title);
 
-		boolean isFistLaunch = PrefUtil.isFirstLaunch(this);
-
-		// 第一次运行，加载app数据
-		if (isFistLaunch) {
-			DialogFragment loadingDialog = new LoadingFragment();
-			loadingDialog.setCancelable(false);
-			loadingDialog.show(getFragmentManager(), "ss");
-			appInitTask = new AppInitTask(loadingDialog);
-			appInitTask.execute();
-		} else {
-			showMenuContent();
-		}
+		// 加载app数据
+		DialogFragment loadingDialog = new LoadingFragment();
+		loadingDialog.setCancelable(false);
+		loadingDialog.show(getFragmentManager(), "ss");
+		appInitTask = new AppInitTask(loadingDialog);
+		appInitTask.execute();
 	}
 
 	public void setCategoryTitle(String text) {

@@ -41,7 +41,7 @@ public abstract class BaseProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 
 		SQLiteDatabase db = helper.getWritableDatabase();
-		long id = db.insert(getTable(), null, values);
+		long id = db.replace(getTable(), null, values);
 
 		return ContentUris.withAppendedId(uri, id);
 	}
