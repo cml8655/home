@@ -99,7 +99,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 		@Override
 		public boolean onDown(MotionEvent e) {
-			return true;
+			return false;
 		}
 
 		@Override
