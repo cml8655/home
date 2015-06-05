@@ -65,6 +65,7 @@ public class CategoryItemLayout extends ViewGroup {
 			AppModel app = data.get(i);
 
 			View appView = inflator.inflate(R.layout.view_app, null);
+			appView.setBackgroundColor(Color.BLUE);
 
 			TextView appNameView = (TextView) appView
 					.findViewById(R.id.app_name);
@@ -84,33 +85,48 @@ public class CategoryItemLayout extends ViewGroup {
 
 			this.addView(appView);
 		}
-		
-		this.requestLayout();
 
 	}
 
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		int viewWidth = getMeasuredWidth();
-		int viewHeight = 1000;
+		int viewHeight = getMeasuredHeight();
 
 		Log.e(TAG, "===>onLayout:" + viewWidth + "," + viewHeight + ",,"
-				+ getHeight());
+				+ getHeight() + "===" + getChildCount());
 
-		int horizontalPadding = viewWidth / columnCount;// 水平方向的列间距
-		int verticalPadding = viewHeight / rowCount;// 垂直方向的列间距
+		if (changed) {
+			return;
+		}
+
+		int len = getChildCount();
+
+		if (len == 0) {
+			return;
+		}
+
+		// 计算每个item的padding
+
+		View firstChildView = getChildAt(0);
+
+		// 水平方向的列间距
+		int horizontalPadding = viewWidth / columnCount
+				- firstChildView.getMeasuredWidth();
+		// 垂直方向的列间距
+		int verticalPadding = viewHeight / rowCount
+				- firstChildView.getMeasuredHeight();
 
 		int x = horizontalPadding;
 		int y = verticalPadding;
-
-		int len = getChildCount();
 
 		// 设置view位置
 		for (int i = 0; i < len; i++) {
 
 			View child = getChildAt(i);
 
-			child.layout(x, y, x + child.getMeasuredWidth(), y);
+			child.layout(x, y, x + child.getMeasuredWidth(),
+					y + child.getMeasuredHeight());
 
 			Log.e(TAG,
 					"lx:" + x + ",ly:" + y + ",rx:"

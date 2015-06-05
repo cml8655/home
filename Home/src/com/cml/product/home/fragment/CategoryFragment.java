@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.cml.product.home.model.AppModel;
 import com.cml.product.home.ui.CategoryItemLayout;
 import com.cml.product.home.ui.CategoryItemView;
 import com.cml.product.home.util.DisplayUtil;
+import com.cml.product.home.util.ToastUtil;
 
 public class CategoryFragment extends BaseFragment {
 
@@ -170,6 +172,8 @@ public class CategoryFragment extends BaseFragment {
 				Integer iconRes = data.getInt(data
 						.getColumnIndex(ColumnDef.App.ICON));
 
+				Log.e(TAG, "====>" + appName + "," + packageName);
+
 				if (null == pm.getLaunchIntentForPackage(packageName)) {
 					// 删除db数据
 					getActivity().sendBroadcast(
@@ -182,6 +186,8 @@ public class CategoryFragment extends BaseFragment {
 				appList.add(appModel);
 			}
 
+			ToastUtil.show(getActivity(), "app===》" + appList.size() + ",,"
+					+ data.getCount());
 			appContainer.addItems(appList);
 
 			// int len = appList.size();
