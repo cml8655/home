@@ -21,9 +21,12 @@ public class AppHelper extends BaseHelper {
 	}
 
 	public long delApp(String pgName) {
-
 		return context.getContentResolver().delete(URI,
 				ColumnDef.App.PACKAGE + "=?", new String[] { pgName });
+	}
+
+	public long clearApp() {
+		return context.getContentResolver().delete(URI, null, null);
 	}
 
 	/**

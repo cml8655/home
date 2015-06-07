@@ -89,11 +89,9 @@ public class HomeActivity extends BaseActivity {
 					AppModel model = new AppModel(pkgName, reInfo.icon,
 							appName, categoryId, appFlg);
 					apps.add(model);
-
-					Log.e(TAG, "flags:" + reInfo.activityInfo.flags
-							+ ",pkgName:" + pkgName + ",appLabel:" + appName);
 				}
-
+				// 清空app信息
+				helper.clearApp();
 				helper.insertApp(apps);
 			}
 
@@ -102,43 +100,11 @@ public class HomeActivity extends BaseActivity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			this.queryAppInfo();
-
-			// // 获取所有已安装的程序
-			// PackageManager pm = getPackageManager();
-			// List<ApplicationInfo> apps = pm.getInstalledApplications(0);
-			//
-			// AppHelper helper = new AppHelper(getApplicationContext());
-			//
-			// for (ApplicationInfo app : apps) {
-			//
-			// String appName = app.loadLabel(pm).toString();
-			// String packageName = app.packageName;
-			//
-			// Integer categoryId = Constant.AppType.TYPE_ETC;
-			// Integer appFlg = Constant.AppFlg.FLAG_ETC;
-			//
-			// // 系统app
-			// if ((app.flags & ApplicationInfo.FLAG_SYSTEM) > 0) {
-			// categoryId = Constant.AppType.TYPE_SYSTEM;
-			// appFlg = Constant.AppFlg.FLAG_SYSTEM;
-			// } else if (packageName.contains(PACKAGE_GAME)) {
-			// categoryId = Constant.AppType.TYPE_GAME;
-			// }
-			//
-			// long id = helper.insertApp(appName, packageName, app.icon,
-			// categoryId, appFlg);
-			//
-			// Log.e(TAG, "insert app values :" + id + ",flags:" + app.flags
-			// + ",name:" + appName);
-			// }
-
 			return true;
 		}
 
 		@Override
 		protected void onPostExecute(Boolean result) {
-
-			Log.d(TAG, "onPostExecute:" + result);
 
 			// 设置初始化完毕
 			PrefUtil.setPref(getApplicationContext(), PrefUtil.KEY_LAUNCH,

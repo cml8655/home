@@ -147,7 +147,7 @@ public class CategoryFragment extends BaseFragment {
 					getActivity(),
 					AppContract.URI,
 					AppContract.QUERY_ALL,
-					ColumnDef.App.CATEGORY + "= ? limit 50",
+					ColumnDef.App.CATEGORY + "= ?",
 					new String[] { String.valueOf(args.getInt(ARGUMENT_TYPE)) },
 					null);
 		}
@@ -185,31 +185,8 @@ public class CategoryFragment extends BaseFragment {
 				appList.add(appModel);
 			}
 
+			appContainer.removeAllViews();
 			appContainer.addItems(appList);
-
-			// int len = appList.size();
-			//
-			// CategoryItemView itemView = new CategoryItemView(getActivity(),
-			// appList, fragmentWidth, fragmentHeight,
-			// new AppItemTouchHelper(getActivity()));
-			//
-			// // 首先清空所有view
-			// appContainer.removeAllViews();
-			//
-			// // 4个一组，添加到界面上显示
-			// for (int i = 0; i < len; i += ROW_COUNT) {
-			//
-			// if (i + ROW_COUNT >= len) {
-			// // 结束
-			// View appViews = itemView.getTableRow(i, len);
-			// appContainer.addView(appViews);
-			// break;
-			// }
-			//
-			// View appViews = itemView.getTableRow(i, i + ROW_COUNT);
-			// appContainer.addView(appViews);
-			// }
-
 		}
 
 		@Override

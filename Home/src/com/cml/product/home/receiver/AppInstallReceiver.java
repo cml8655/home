@@ -20,8 +20,6 @@ public class AppInstallReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-		Log.d(TAG, "AppInstallReceiver===>" + intent.getAction());
-
 		if (Intent.ACTION_PACKAGE_ADDED.equals(intent.getAction())) {
 
 			try {
@@ -37,12 +35,10 @@ public class AppInstallReceiver extends BroadcastReceiver {
 				// 插入到DB
 				AppModel model = AppUtil.getAppModel(info.applicationInfo,
 						context);
-				long result = new AppHelper(context).insertApp(model);
-				// 插入成功,发送广播通知ui变化
-				if (result != -1) {
-					context.sendBroadcast(new Intent(
-							IntentAction.Broadcast.APP_INSTALLED));
-				}
+				new AppHelper(context).insertApp(model);
+				// 发送广播通知ui变化
+				context.sendBroadcast(new Intent(
+						IntentAction.Broadcast.APP_INSTALLED));
 			} catch (NameNotFoundException e) {
 				Log.e(TAG, "app没有安装==>" + e.getMessage());
 			}
