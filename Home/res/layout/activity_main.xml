@@ -44,21 +44,26 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:background="#123456"
-            android:text="电话" />
+            android:text="电话"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circle_bg"
+            android:gravity="center"
+            android:text="相机"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:background="#123456"
-            android:text="相机" />
-
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:background="#123456"
-            android:text="短信" />
+            android:text="短信"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </LinearLayout>
