@@ -19,20 +19,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 
 import com.cml.product.home.R;
 import com.cml.product.home.activity.HomeActivity;
 import com.cml.product.home.constant.IntentAction;
 import com.cml.product.home.db.contract.AppContract;
 import com.cml.product.home.db.def.ColumnDef;
-import com.cml.product.home.db.helper.AppHelper;
 import com.cml.product.home.fragment.helper.AppItemTouchHelper;
 import com.cml.product.home.model.AppModel;
 import com.cml.product.home.ui.CategoryItemLayout;
-import com.cml.product.home.ui.CategoryItemView;
 import com.cml.product.home.util.DisplayUtil;
-import com.cml.product.home.util.ToastUtil;
 
 public class CategoryFragment extends BaseFragment {
 
@@ -107,6 +103,9 @@ public class CategoryFragment extends BaseFragment {
 
 		appContainer = (CategoryItemLayout) view
 				.findViewById(R.id.category_container);
+		
+		
+		appContainer.setListener(new AppItemTouchHelper(getActivity()));
 
 		if (null != homeActivity) {
 			homeActivity.setCategoryTitle(title);
@@ -148,7 +147,7 @@ public class CategoryFragment extends BaseFragment {
 					getActivity(),
 					AppContract.URI,
 					AppContract.QUERY_ALL,
-					ColumnDef.App.CATEGORY + "= ? ",
+					ColumnDef.App.CATEGORY + "= ? limit 50",
 					new String[] { String.valueOf(args.getInt(ARGUMENT_TYPE)) },
 					null);
 		}
@@ -186,8 +185,6 @@ public class CategoryFragment extends BaseFragment {
 				appList.add(appModel);
 			}
 
-			ToastUtil.show(getActivity(), "app===》" + appList.size() + ",,"
-					+ data.getCount());
 			appContainer.addItems(appList);
 
 			// int len = appList.size();

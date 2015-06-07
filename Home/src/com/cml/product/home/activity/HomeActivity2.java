@@ -1,55 +1,78 @@
 package com.cml.product.home.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.cml.product.home.R;
+import com.cml.product.home.constant.Constant;
+import com.cml.product.home.db.contract.AppContract;
+import com.cml.product.home.db.def.ColumnDef;
+import com.cml.product.home.model.AppModel;
+import com.cml.product.home.ui.CategoryItemLayout;
+import com.cml.product.home.util.ToastUtil;
 
-public class HomeActivity2 extends BaseActivity {
+public class HomeActivity2 extends BaseActivity implements
+		LoaderCallbacks<Cursor> {
 
-	private LinearLayout header;
-	private LinearLayout item;
+	private CategoryItemLayout appContainer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main2);
 
-		header = (LinearLayout) findViewById(R.id.layout_header);
-		item = (LinearLayout) findViewById(R.id.category_item);
+		appContainer = (CategoryItemLayout) findViewById(R.id.category_container);
 
-		OnItemClickListener listener = new OnItemClickListener();
-
-		item.setOnClickListener(listener);
-		header.setOnClickListener(listener);
+		getLoaderManager().initLoader(1, null, this);
 	}
 
-	private class OnItemClickListener implements OnClickListener {
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-		@Override
-		public void onClick(View v) {
+		return new CursorLoader(this, AppContract.URI, AppContract.QUERY_ALL,
+				ColumnDef.App.CATEGORY + "= ? limit 50",
+				new String[] { String.valueOf(Constant.AppType.TYPE_ETC) },
+				null);
+	}
 
-			Toast.makeText(
-					getApplicationContext(),
-					(v.getId() == R.id.layout_header) + ",,"
-							+ (v.getId() == R.id.category_item),
-					Toast.LENGTH_LONG).show();
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-			Log.d("dddd", (v.getId() == R.id.layout_header) + ",,"
-					+ (v.getId() == R.id.category_item));
-
-			// title���
-			if (v.getId() == R.id.layout_header) {
-				header.setVisibility(View.GONE);
-				item.setVisibility(View.VISIBLE);
-			} else {
-				header.setVisibility(View.VISIBLE);
-				item.setVisibility(View.GONE);
-			}
+		if (null == data) {
+			return;
 		}
+
+		List<AppModel> appList = new ArrayList<AppModel>();
+
+		// 将数据封装成list对象
+		while (data.moveToNext()) {
+
+			String appName = data.getString(data
+					.getColumnIndex(ColumnDef.App.NAME));
+			String packageName = data.getString(data
+					.getColumnIndex(ColumnDef.App.PACKAGE));
+			Integer iconRes = data.getInt(data
+					.getColumnIndex(ColumnDef.App.ICON));
+
+			AppModel appModel = new AppModel(packageName, iconRes, appName);
+			appList.add(appModel);
+		}
+
+		ToastUtil.show(this,
+				"app===》" + appList.size() + ",," + data.getCount());
+		appContainer.addItems(appList);
+
 	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+
+	}
+
 }

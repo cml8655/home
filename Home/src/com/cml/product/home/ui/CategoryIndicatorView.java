@@ -29,7 +29,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 	private static final String TAG = CategoryIndicatorView.class
 			.getSimpleName();
-	private static final int ITEM_PADDING = 30;
+	private static final int ITEM_PADDING = 20;
 	public static final int FLYING_Y_RANGE = 150;
 	public static final int FLYING_DISTANCE_X = 100;
 
@@ -46,7 +46,8 @@ public class CategoryIndicatorView extends ViewGroup implements
 	private WeakReference<ViewGroup> dispatchTouchView;
 
 	private int itemWitdh;
-	private int itemIndicatorWidth = 20;
+	/**露出在侧边栏宽度*/
+	private int itemIndicatorWidth = 0;
 
 	private boolean flyable = false;
 
@@ -99,7 +100,7 @@ public class CategoryIndicatorView extends ViewGroup implements
 
 		@Override
 		public boolean onDown(MotionEvent e) {
-			return false;
+			return true;
 		}
 
 		@Override

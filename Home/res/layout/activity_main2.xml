@@ -1,88 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="right"
-    android:orientation="vertical" >
+    android:fillViewport="true"
+    android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/layout_header"
+    <com.cml.product.home.ui.CategoryItemLayout
+        android:id="@+id/category_container"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginBottom="10dp"
-        android:background="#123456"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="分类信息"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="所有app"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/category_item"
-        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:background="#123456"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="《"
-            android:textColor="@android:color/white" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:background="#890123"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="电话"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="相机"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="短信"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-</LinearLayout>
+        android:background="@android:color/holo_blue_bright" >
+    </com.cml.product.home.ui.CategoryItemLayout>
+</ScrollView>

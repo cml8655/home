@@ -5,15 +5,15 @@ import java.util.List;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cml.product.home.R;
@@ -26,19 +26,23 @@ import com.cml.product.home.util.PrefUtil;
  * @author teamlab
  *
  */
-public class CategoryItemLayout extends ViewGroup {
+public class CategoryItemLayout extends ViewGroup implements OnClickListener,
+		OnLongClickListener {
 	private static final String TAG = CategoryItemLayout.class.getSimpleName();
 
 	/** 每行显示的个数 */
 	private int rowCount;
 	/** 每列显示的个数 */
 	private int columnCount;
+	/** 行间距 */
+	private int verticalMargin;
+
+	private OnItemTouchListener listener;
 
 	public CategoryItemLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		rowCount = PrefUtil.getAppRowCount(context);
 		columnCount = PrefUtil.getAppColumnCount(context);
-		setBackgroundColor(Color.GRAY);
 	}
 
 	/**
@@ -65,8 +69,7 @@ public class CategoryItemLayout extends ViewGroup {
 
 			AppModel app = data.get(i);
 
-			View appView = inflator.inflate(R.layout.view_app, null);
-			appView.setBackgroundColor(Color.BLUE);
+			View appView = inflator.inflate(R.layout.view_app, this, false);
 
 			TextView appNameView = (TextView) appView
 					.findViewById(R.id.app_name);
@@ -84,6 +87,14 @@ public class CategoryItemLayout extends ViewGroup {
 
 			appView.setTag(data.get(i));
 
+			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
+			appView.setLayoutParams(params);
+
+			// 添加监听事件
+			appView.setOnClickListener(this);
+			appView.setOnLongClickListener(this);
+
 			this.addView(appView);
 		}
 
@@ -96,10 +107,6 @@ public class CategoryItemLayout extends ViewGroup {
 
 		Log.e(TAG, "===>onLayout:" + viewWidth + "," + viewHeight + ",,"
 				+ getHeight() + "===" + getChildCount());
-
-		if (changed) {
-			return;
-		}
 
 		int len = getChildCount();
 
@@ -114,12 +121,11 @@ public class CategoryItemLayout extends ViewGroup {
 		// 水平方向的列间距
 		int horizontalPadding = viewWidth / columnCount
 				- firstChildView.getMeasuredWidth();
-		// 垂直方向的列间距
-		int verticalPadding = viewHeight / rowCount
-				- firstChildView.getMeasuredHeight();
 
-		int x = horizontalPadding;
-		int y = verticalPadding;
+		Log.e(TAG, "onlayout==>verticalPadding:" + verticalMargin);
+
+		int x = horizontalPadding / 2;
+		int y = verticalMargin;
 
 		// 设置view位置
 		for (int i = 0; i < len; i++) {
@@ -129,21 +135,14 @@ public class CategoryItemLayout extends ViewGroup {
 			child.layout(x, y, x + child.getMeasuredWidth(),
 					y + child.getMeasuredHeight());
 
-			Log.e(TAG,
-					"lx:" + x + ",ly:" + y + ",rx:"
-							+ (x + child.getMeasuredWidth()) + ",ry:" + y);
-
 			x += child.getMeasuredWidth() + horizontalPadding;
 
 			// 换行
 			if (i > 1 && i % columnCount == columnCount - 1) {
-				x = horizontalPadding;
-				y += verticalPadding + child.getMeasuredHeight();
+				x = horizontalPadding / 2;
+				y += verticalMargin + child.getMeasuredHeight();
 			}
 
-			if(i>40){
-				break;
-			}
 		}
 
 	}
@@ -151,15 +150,68 @@ public class CategoryItemLayout extends ViewGroup {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		for (int i = 0; i < getChildCount(); i++) {
-			View child = getChildAt(i);
-			measureChild(child, widthMeasureSpec, heightMeasureSpec);
+		measureChildren(widthMeasureSpec, heightMeasureSpec);
+
+		int childCount = getChildCount();
+		if (childCount == 0) {
+			return;
 		}
+
+		int childRowCount = (int) Math.ceil(childCount / rowCount);
+
+		View firstChild = getChildAt(0);
+
+		// 垂直方向的列间距
+		verticalMargin = getMeasuredHeight() / rowCount
+				- firstChild.getMeasuredHeight();
+
+		int childHeight = firstChild.getMeasuredHeight() + verticalMargin;
+
+		Log.e(TAG, "measure width:" + getMeasuredWidth() + ",height:"
+				+ getMeasuredHeight() + ",custom set height:" + childHeight
+				* childRowCount + ",measure padding:" + verticalMargin);
+
+		setMeasuredDimension(getMeasuredWidth(), childHeight * childRowCount);
 	}
 
 	@Override
 	public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
 		return new MarginLayoutParams(getContext(), attrs);
+	}
+
+	public void setListener(OnItemTouchListener listener) {
+		this.listener = listener;
+	}
+
+	@Override
+	public boolean onLongClick(View v) {
+
+		if (null == listener) {
+			return false;
+		}
+
+		return listener.onLongClick(v, (AppModel) v.getTag());
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (null != listener) {
+			listener.onClick(v, (AppModel) v.getTag());
+		}
+
+	}
+
+	/**
+	 * app点击事件与长按事件
+	 * 
+	 * @author teamlab
+	 *
+	 */
+	public static interface OnItemTouchListener {
+
+		void onClick(View v, final AppModel data);
+
+		boolean onLongClick(View v, final AppModel data);
 	}
 
 }

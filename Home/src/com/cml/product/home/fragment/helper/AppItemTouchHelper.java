@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
 
 import com.cml.product.home.R;
 import com.cml.product.home.model.AppModel;
-import com.cml.product.home.ui.CategoryItemView;
+import com.cml.product.home.ui.CategoryItemLayout;
 import com.cml.product.home.util.ToastUtil;
 
 /**
@@ -23,7 +23,7 @@ import com.cml.product.home.util.ToastUtil;
  * @author teamlab
  *
  */
-public class AppItemTouchHelper implements CategoryItemView.OnItemTouchListener {
+public class AppItemTouchHelper implements CategoryItemLayout.OnItemTouchListener {
 
 	private static final String TAG = "AppItemTouchHelper";
 
